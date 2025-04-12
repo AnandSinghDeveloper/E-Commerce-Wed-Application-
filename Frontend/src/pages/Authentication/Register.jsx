@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import CommonFrom from "@/components/Common/CommonFrom";
 import { registerfromconfig } from "@/config/Config";
+import { useDispatch } from "react-redux";
+import { registerUser } from "@/store/auth-slice/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 const initialFormData = {
   userName: "",
@@ -11,7 +14,21 @@ const initialFormData = {
 };
 
 const Register = () => {
-  const [Fromdata, setFromdata] = useState(initialFormData);
+  const [fromdata, setFromdata] = useState(initialFormData);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onsubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(fromdata)).then(() => {
+      navigate("/auth/login");
+    });
+
+    console.log(fromdata);
+  };
+
+  console.log(fromdata);
+  
+
   return (
     <div className="space-y-6 mx-w-md mx-auto w-full bg-transparent relative  ">
       <img
@@ -21,10 +38,10 @@ const Register = () => {
       />
 
       <div className=" text-center  ">
-        <h1 className="text-3xl font-bold tracking-tight  text-[#0A88E1]  mb">
+        <h1 className="text-3xl font-bold tracking-tight  font-[ubuntu] text-[#0A88E1] ">
           Create new account
         </h1>
-        <p className="mt-2 text-[#83E7E9]  ">
+        <p className="mt-2 font-[ubuntu] text-[#83E7E9]  ">
           Already have an account?{" "}
           <Link
             className="text-primary font-medium ml-2 hover: underline"
@@ -36,12 +53,9 @@ const Register = () => {
       </div>
       <CommonFrom
         Formcontorl={registerfromconfig}
-        Fromdata={Fromdata}
+        Fromdata={fromdata}
         setFromdata={setFromdata}
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(Fromdata);
-        }}
+        onSubmit={onsubmit}
         buttonText={"Create account"}
         color="#014F8E"
       />

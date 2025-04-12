@@ -105,11 +105,11 @@ const CommonFrom = ({
     return element;
   };
   return (
-    <form onSubmit={onSubmit}>
-      <div className="flex flex-col bg-transparent p-5  gap-4">
+    <form onSubmit={onSubmit} >
+      <div className="flex flex-col w-full  p-5  gap-4">
         {Formcontorl.map((item) => {
           return (
-            <div key={item.name} className="grid  w-full gap-2">
+            <div key={item.name} className="grid text-foreground  w-full gap-2">
               <Label className="text-sm mb-1 font-medium ">{item.label}</Label>
               {renderInput(item)}
             </div>
