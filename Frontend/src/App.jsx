@@ -15,10 +15,26 @@ import ShopingListing from "./pages/Shopping/ShopingListing";
 import ShopingCheckout from "./pages/Shopping/ShopingCheckout";
 import ShopingAccount from "./pages/Shopping/ShopingAccount";
 import AuthCheck from "./components/Common/AuthCheck";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Authcheck } from "./store/auth-slice/auth-slice";
+import { Skeleton } from "./components/ui/skeleton";
 
 function App() {
-  const isAuthenticated = false;
-  const user = null
+  const { user, isauthenticated ,isloading } = useSelector((state) => state.auth);
+
+  console.log(user, isauthenticated);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(Authcheck());
+  }, [dispatch]);
+
+  if (isloading){
+    return <Skeleton className="w-[100px] h-[20px] rounded-full" />
+  
+  }
 
   return (
     <div className=" overflow-hidden flex flex-col">
@@ -26,7 +42,7 @@ function App() {
         <Route
           path="/auth"
           element={
-            <AuthCheck isAuthenticated={isAuthenticated} user={user}>
+            <AuthCheck isAuthenticated={isauthenticated} user={user}>
               <Layout />
             </AuthCheck>
           }
@@ -37,8 +53,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <AuthCheck isAuthenticated={isAuthenticated} user={user}>
-              
+            <AuthCheck isAuthenticated={isauthenticated} user={user}>
               <ADlayout />
             </AuthCheck>
           }
@@ -51,8 +66,7 @@ function App() {
         <Route
           path="/Shop"
           element={
-            <AuthCheck isAuthenticated={isAuthenticated} user={user}>
-              
+            <AuthCheck isAuthenticated={isauthenticated} user={user}>
               <Shoplayout />
             </AuthCheck>
           }

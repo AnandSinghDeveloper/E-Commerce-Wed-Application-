@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import CommonFrom from "@/components/Common/CommonFrom";
 import { loginfromconfig } from "@/config/Config";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/store/auth-slice/auth-slice";
+import { toast } from "sonner";
 
 const initialFormData = {
   email: "",
@@ -10,7 +13,24 @@ const initialFormData = {
 };
 
 const Login = () => {
-  const [Fromdata, setFromdata] = React.useState(initialFormData);
+  const [fromdata, setFromdata] = React.useState(initialFormData);
+  const dispatch = useDispatch()
+
+  const onsubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(fromdata)).then((data) =>{
+      if (data?.payload?.success) {
+        toast.success(data?.payload?.message);
+        console.log(data);
+        
+      }else{
+        toast.error(data?.payload?.message || "Something went wrong");
+      }
+      
+    })
+      
+    
+  }
 
   return (
     <div className="space-y-6 mx-w-md mx-auto w-full bg-transparent relative  ">
@@ -36,12 +56,9 @@ const Login = () => {
       </div>
       <CommonFrom
         Formcontorl={loginfromconfig}
-        Fromdata={Fromdata}
+        Fromdata={fromdata}
         setFromdata={setFromdata}
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(Fromdata);
-        }}
+        onSubmit={onsubmit}
         buttonText={"Login"}
         color="#014F8E"
       />

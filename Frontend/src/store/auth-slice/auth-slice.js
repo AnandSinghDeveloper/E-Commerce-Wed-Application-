@@ -3,13 +3,12 @@ import axios from "axios";
 
 const initialState = {
   isauthenticated: false,
-  isloading: false,
+  isloading: true,
   user: null,
 };
 
 export const registerUser = createAsyncThunk(
   "/auth/register",
-
 
   async (fromdata) => {
     const response = await axios.post(
@@ -17,6 +16,42 @@ export const registerUser = createAsyncThunk(
       fromdata,
       {
         withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "/auth/login",
+
+  async (fromdata) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      fromdata,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+export const Authcheck = createAsyncThunk(
+  "/auth/check-auth",
+
+  async () => {
+    const response = await axios.get(
+      "http://localhost:5000/api/auth/check-auth",
+      {
+        withCredentials: true,
+        headers: {
+          "cache-control":
+            "no-cache, no-store, must-revalidate,proxy-revalidate",
+
+          Expires: "0",
+        },
       }
     );
 
@@ -43,6 +78,37 @@ const authSlice = createSlice({
         state.isloading = false;
         state.isauthenticated = false;
         state.user = null;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isloading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        (state.isloading = false),
+          (state.isauthenticated = action.payload.success ? true : false);
+       
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isloading = false;
+        state.isauthenticated = false;
+        state.user = null;
+      })
+      .addCase(Authcheck.pending, (state) => {
+        state.isloading = true;
+        console.log(state);
+        
+      })
+      .addCase(Authcheck.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        (state.isloading = false),
+          (state.isauthenticated = action.payload.success ? true : false);
+        console.log(action);
+      })
+      .addCase(Authcheck.rejected, (state, action) => {
+        state.isloading = false;
+        state.isauthenticated = false;
+        state.user = null;
+        console.log(action);
       });
   },
 });

@@ -6,6 +6,7 @@ import { registerfromconfig } from "@/config/Config";
 import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/auth-slice/auth-slice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const initialFormData = {
   userName: "",
@@ -19,14 +20,20 @@ const Register = () => {
   const dispatch = useDispatch();
   const onsubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser(fromdata)).then(() => {
+    dispatch(registerUser(fromdata)).then((data) => {
+      if (data?.payload?.success) {
+        toast.success(data?.payload?.message);
+
+      }else{
+        toast.error(data?.payload?.message);
+      }
       navigate("/auth/login");
     });
 
-    console.log(fromdata);
+    // console.log(fromdata);
   };
 
-  console.log(fromdata);
+  // console.log(fromdata);
   
 
   return (
