@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 // const dotenv = require("dotenv");
 const DB_conection = require("./DB_conection");
 const authRouter = require("./routes/auth/authRoutes");
+const adminRouter = require("./routes/Admin/productRoute");
 
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ App.use(
 App.use(cookieParser());
 App.use(express.static("public"));
 App.use('/api/auth', authRouter);
+App.use('/api/admin', adminRouter);
 
 App.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

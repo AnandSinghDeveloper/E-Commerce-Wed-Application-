@@ -1,13 +1,14 @@
 import { Label } from "@radix-ui/react-label";
 import React from "react";
 import { Input } from "../ui/input";
+// import { SelectContent } from "../ui/select";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
@@ -50,13 +51,13 @@ const CommonFrom = ({
       case cases.SELECT:
         element = (
           <Select
+            onValueChange={(value) => {
+              setFromdata({ ...Fromdata, [item.name]: value });
+            }}
             value={value}
-            onValueChange={(value) =>
-              setFromdata({ ...Fromdata, [item.name]: value })
-            }
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={item.placeholder} />
+              <SelectValue placeholder={item.label} />
             </SelectTrigger>
             <SelectContent>
               {item.options && item?.options.length > 0
@@ -105,20 +106,20 @@ const CommonFrom = ({
     return element;
   };
   return (
-    <form onSubmit={onSubmit} >
+    <form onSubmit={onSubmit}>
       <div className="flex flex-col w-full  p-5  gap-4">
-        {Formcontorl.map((item) => {
+        {Formcontorl.map((items) => {
           return (
-            <div key={item.name} className="grid text-foreground  w-full gap-2">
-              <Label className="text-sm mb-1 font-medium ">{item.label}</Label>
-              {renderInput(item)}
+            <div key={items.name} className="grid text-foreground  w-full gap-2">
+              <Label className="text-sm mb-1 font-medium ">{items.label}</Label>
+              {renderInput(items)}
             </div>
           );
         })}
       </div>
       <Button
         type="submit"
-        className="mt-7 w-full"
+        className="mt-7 w-[90%] ml-5 "
         style={{ backgroundColor: color }}
       >
         {buttonText ? buttonText : "Submit"}

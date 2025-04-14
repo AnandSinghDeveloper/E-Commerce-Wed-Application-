@@ -11,7 +11,7 @@ function MenuItem(item, setOpen) {
     <nav className="flex flex-col gap-2 mt-8 ">
       {adminMenuItems.map((item) => (
         <div
-          className=" cursor-pointer flex items-center gap-2 rounded-md px-3 py-2  text-muted-foreground hover:bg-muted hover:text-foreground font-medium active:p-2  active:bg-accent active:text-accent-foreground active:border active:border-slate-200"
+          className=" cursor-pointer flex items-center gap-2 rounded-md px-3 py-2  text-muted-foreground hover:bg-muted hover:text-foreground font-medium active:p-2  active:bg-accent active:text-accent-foreground active:border active:border-slate-200  "
           key={item.id}
           onClick={() => {
             navigate(item.path);
@@ -35,7 +35,7 @@ const ADsidebar = ({ open, setOpen }) => {
             <SheetHeader className={"border-b"}>
               <SheetTitle className={"flex items-center gap-2 mt-5 mb-5"}>
                 <ChartNoAxesCombined className={"size-10"} />
-                <span className={"text-xl font-bold  "}>Admin Pabal</span>
+                <span className={"text-xl font-bold font-[ubuntu] "}>Admin Pabal</span>
               </SheetTitle>
             </SheetHeader>
             <MenuItem setOpen={setOpen} />
@@ -48,7 +48,7 @@ const ADsidebar = ({ open, setOpen }) => {
           className="flex cursor-pointer items-center gap-2  "
         >
           <ChartNoAxesCombined className={"size-10"} />
-          <h1 className="text-2xl font-bold">Admin Panal</h1>
+          <h1 className="text-2xl font-bold font-[ubuntu]">Admin Panal</h1>
         </div>
         <MenuItem />
       </aside>

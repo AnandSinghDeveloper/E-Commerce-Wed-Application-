@@ -11,7 +11,7 @@ const ADheader = ({ open, setOpen }) => {
         <span className="sr-only">Toggle navigation</span>
       </Button>
       <div className="flex flex-1 justify-end">
-        <Button className=" inline-flex items-center gap-2 cursor-pointer  text-sm font-medium px-4 py-2 rounded-md shadow  ">
+        <Button className="  inline-flex items-center gap-2 cursor-pointer  text-sm font-medium px-4 py-2 rounded-md shadow  ">
           <LogOut />
           LogOut
         </Button>
