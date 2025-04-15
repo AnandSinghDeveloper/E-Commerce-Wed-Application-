@@ -29,7 +29,7 @@ function MenuItem(item, setOpen) {
 const ADsidebar = ({ open, setOpen }) => {
   return (
     <Fragment>
-      <Sheet open={open} onOpenChange={setOpen}>
+      <Sheet open={open} onOpenChange={setOpen} className="border-amber-300">
         <SheetContent side="left" className="w-60 rounded-tr-2xl rounded-br-xl">
           <div className="flex flex-col h-full p-3 rounded-xl">
             <SheetHeader className={"border-b"}>

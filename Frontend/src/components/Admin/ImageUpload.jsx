@@ -4,8 +4,9 @@ import { Input } from "../ui/input";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
 
-const ImageUpload = ({ image, setImage, imageUrl, setImageUrl }) => {
+const ImageUpload = ({ image, setImage, imageUrl, setImageUrl , setLoading, loading}) => {
   const inputRef = useRef(null);
   const handleImageFile = (e) => {
     const file = e.target.files[0];
@@ -13,28 +14,32 @@ const ImageUpload = ({ image, setImage, imageUrl, setImageUrl }) => {
       setImage(file);
     }
   };
-    
+
   const handleREmoveImage = () => {
     setImage(null);
-    if(inputRef.current){
+    if (inputRef.current) {
       inputRef.current.value = null;
     }
-  }
+  };
 
   const uploadImagetoCloud = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("my-image", image);
-    const response = await axios.post(" http://localhost:5000/api/admin/uploadimage ", data,); 
+    const response = await axios.post(
+      " http://localhost:5000/api/admin/uploadimage ",
+      data
+    );
     console.log(response);
-    if(response){
-
-      setImageUrl(response.data.result.url)
+    if (response?.data?.success) {
+      setImageUrl(response.data.result.url);
+      setLoading(false);
     }
-  }
+  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
-  }
+  };
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -42,14 +47,13 @@ const ImageUpload = ({ image, setImage, imageUrl, setImageUrl }) => {
     if (dropfile) {
       setImage(dropfile);
     }
-  }
+  };
 
-   useEffect(() => {
-     if(image !== null){
-      uploadImagetoCloud()
-
-     }
-   }, [image])
+  useEffect(() => {
+    if (image !== null) {
+      uploadImagetoCloud();
+    }
+  }, [image]);
 
   return (
     <div className="w-full max-w-md mx-auto mt-4 ">
@@ -78,14 +82,22 @@ const ImageUpload = ({ image, setImage, imageUrl, setImageUrl }) => {
             </span>
           </Label>
         ) : (
+              
+              loading ? <Skeleton className={"h-20 w-full bg-gray-200 "}/>:
+            
           <div className="flex items-center justify-between w-full  cursor-pointer">
             <div className="flex items-center">
               <FileIcon className="w-7 h-7 text-primary text-lg mr-2" />
             </div>
-               <p className=" font-medium text-base">{image.name} </p>
-               <Button variant={"ghost"} size={"icon"} className={"text-muted-foreground hover:text-foreground "} onClick={handleREmoveImage} >
-                <XIcon className="w-4 h-4 "/>
-               </Button>
+            <p className=" font-medium text-base">{image.name} </p>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              className={"text-muted-foreground hover:text-foreground "}
+              onClick={handleREmoveImage}
+            >
+              <XIcon className="w-4 h-4 " />
+            </Button>
           </div>
         )}
       </div>

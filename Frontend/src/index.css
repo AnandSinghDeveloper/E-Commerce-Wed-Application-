@@ -120,3 +120,32 @@
   }
 }
 
+.cart {
+  
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cart:hover {
+  transform: scale(1.02);
+  animation: glowBorder 1s infinite alternate;
+}
+
+@keyframes glowBorder {
+  from {
+    box-shadow: 0 0 5px rgba(242, 243, 244, 0.3);
+    border-color: #ccc;
+  }
+  to {
+    box-shadow: 0 0 15px rgba(226, 228, 231, 0.8);
+    border-color: #6f6b70;
+  }
+}
+

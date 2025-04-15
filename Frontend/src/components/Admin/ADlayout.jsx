@@ -11,7 +11,7 @@ const ADlayout = () => {
       <ADsidebar open={open} setOpen={setOpen} />
       <div className="flex flex-1 flex-col">
         <ADheader open={open} setOpen={setOpen} />
-        <main className=" flex flex-1 bg-muted/50 p-4 md:px-6">
+        <main className=" flex flex-1 flex-col bg-white p-4 md:px-6">
           <Outlet />
         </main>
       </div>
