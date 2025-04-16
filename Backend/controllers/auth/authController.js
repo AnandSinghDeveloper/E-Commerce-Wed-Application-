@@ -87,10 +87,18 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  req.clearcookie("token").res.status(200).json({
-    success: true,
-    message: "User logged out successfully",
-  });
+  try{
+    res.clearCookie("token").json({
+      success: true,
+      message: "User logged out successfully",
+    })
+  }catch(error){
+    res.status(500).json({
+      success: false,
+      message: "something went wrong",
+    })
+    console.log(error)
+  }
 };
 
 const authmiddleware = async (req, res, next) => {

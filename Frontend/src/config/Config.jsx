@@ -132,5 +132,42 @@ export const ProductsfromElements = [
       { label: "Science", id: "Science" },
     ],
   },
-  
+];
+
+export const userMenuItems = [
+  {
+    id: "Home",
+    label: "Home",
+    path: "/Shop/home",
+  },
+  {
+    id: "Men",
+    label: "Men",
+    path: "/Shop/listing",
+  },
+  {
+    id: "Women",
+    label: "Women",
+    path: "/Shop/listing",
+  },
+  {
+    id: "Kids",
+    label: "Kids",
+    path: "/Shop/listing",
+  },
+  {
+    id: "accessories",
+    label: "Accessories",
+    path: "/Shop/listing",
+  },
+  {
+    id: "electronics",
+    label: "Electronics",
+    path: "/Shop/listing",
+  },
+  {
+    id: "books",
+    label: "Books",
+    path: "/Shop/listing",
+  },
 ];

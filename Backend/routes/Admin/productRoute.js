@@ -10,7 +10,7 @@ router.post("/uploadimage", upload.single("my-image"), HandleImageUpload);
 router.post("/addproduct", Addnewproduct);
 router.get("/fetchproducts", FatchProducts);
 router.put("/updateproduct/:id", Updateproduct);
-router.delete("/deleteproduct/:id", Deleteproduct)
+router.delete("/deleteproduct/:id", Deleteproduct);
 
 
 module.exports = router;

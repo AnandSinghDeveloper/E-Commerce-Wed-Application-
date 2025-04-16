@@ -15,7 +15,9 @@ import { fetchedProducts } from "@/store/Admin/ProductSlice/ProductSlice";
 import { useSelector } from "react-redux";
 import { addproduct } from "@/store/Admin/ProductSlice/ProductSlice";
 import { toast } from "sonner";
+import { updatedProduct } from "@/store/Admin/ProductSlice/ProductSlice";
 import ProductTile from "./ProductTile";
+import { deletedProduct } from "@/store/Admin/ProductSlice/ProductSlice";
 
 const initialFromdata = {
   title: "",
@@ -35,25 +37,51 @@ const ADproducts = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const { productsList } = useSelector((state) => state.adminProduct);
+  const [CurrentEditedID, setCurrentEditedID] = useState(null);
+
   const dispatch = useDispatch();
 
+
+
+   const HandleDelate = (DeleteproductID)=>{
+
+     dispatch(deletedProduct(DeleteproductID)).then((data) => {
+          if (data?.payload?.success) {
+            setFromdata(initialFromdata);
+            dispatch(fetchedProducts());
+            toast.success(data?.payload?.message);
+          }
+     })
+     
+   }
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addproduct({
-        ...Fromdata,
-        image: imageUrl,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        
-        setFromdata(initialFromdata);
-        setOpenCreateProduct(false);
-        dispatch(fetchedProducts());
+    CurrentEditedID !== null
+      ? dispatch(updatedProduct({ id: CurrentEditedID, Fromdata })).then(
+          (data) => {
+            if (data?.payload?.success) {
+              setFromdata(initialFromdata);
+              setOpenCreateProduct(false);
+              dispatch(fetchedProducts());
+              setCurrentEditedID(null);
+              toast.success(data?.payload?.message);
+            }
+          }
+        )
+      : dispatch(
+          addproduct({
+            ...Fromdata,
+            image: imageUrl,
+          })
+        ).then((data) => {
+          if (data?.payload?.success) {
+            setFromdata(initialFromdata);
+            setOpenCreateProduct(false);
+            dispatch(fetchedProducts());
 
-        toast.success(data?.payload?.message);
-      }
-    });
+            toast.success(data?.payload?.message);
+          }
+        });
   };
 
   useEffect(() => {
@@ -73,18 +101,29 @@ const ADproducts = () => {
           Add New Product
         </Button>
       </div>
-      <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-7  card ">
-      
+      <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-7   card ">
         {productsList &&
           productsList.length > 0 &&
           productsList.map((product, index) => {
-            return <ProductTile key={index} product={product} />;
+            return (
+              <ProductTile
+                setCurrentEditedID={setCurrentEditedID}
+                CurrentEditedID={CurrentEditedID}
+                setOpenCreateProduct={setOpenCreateProduct}
+                setFromdata={setFromdata}
+                key={index}
+                product={product}
+                HandleDelate={HandleDelate}
+              />
+            );
           })}
       </div>
       <Sheet
         open={openCreateProduct}
         onOpenChange={() => {
           setOpenCreateProduct(!openCreateProduct);
+          setFromdata(initialFromdata);
+          setCurrentEditedID(null);
         }}
         className="border"
       >
@@ -94,7 +133,7 @@ const ADproducts = () => {
         >
           <SheetHeader className="">
             <SheetTitle className={"mt-4 font-bold text-xl"}>
-              Add New Product
+              {CurrentEditedID === null ? "Add New Product" : "Edit Product"}
             </SheetTitle>
           </SheetHeader>
           <ImageUpload
@@ -111,7 +150,7 @@ const ADproducts = () => {
               Fromdata={Fromdata}
               setFromdata={setFromdata}
               onSubmit={onSubmit}
-              buttonText="Add Product"
+              buttonText={CurrentEditedID === null ? "Add Product" : "Update"}
               color=""
             />
           </div>

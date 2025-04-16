@@ -134,6 +134,8 @@ const Updateproduct = async (req, res) => {
 const Deleteproduct = async (req, res) => {
   try {
     const { id } = req.params;
+  
+    
     const product = await Products.findByIdAndDelete(id);
     if (!product) {
       return res.status(404).json({
