@@ -63,9 +63,10 @@ const loginUser = async (req, res) => {
         id: cheackedUser._id,
         email: cheackedUser.email,
         role: cheackedUser.role,
+        userName: cheackedUser.userName,
       },
       "ANAND_SECRET",
-      { expiresIn: "30m" }
+      { expiresIn: "60m" }
     );
 
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
@@ -75,6 +76,7 @@ const loginUser = async (req, res) => {
         id: cheackedUser.id,
         role: cheackedUser.role,
         email: cheackedUser.email,
+        userName: cheackedUser.userName,
       },
     });
   } catch (error) {
