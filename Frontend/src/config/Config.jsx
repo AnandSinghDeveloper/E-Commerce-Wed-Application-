@@ -171,3 +171,97 @@ export const userMenuItems = [
     path: "/Shop/listing",
   },
 ];
+
+export const FiltersOptions = {
+  Category: [
+    {
+      label: "Electronics",
+      id: "Electronics",
+    },
+    {
+      label: "Toys",
+      id: "Toys",
+    },
+    {
+      label: "Men",
+      id: "Men",
+    },
+    {
+      label: "Women",
+      id: "Women",
+    },
+    {
+      label: "Footwear",
+      id: "Footwear",
+    },
+    {
+      label: "Baby",
+      id: "Baby",
+    },
+  ],
+  Brand: [
+    {
+      label: "Apple",
+      id: "Apple",
+    },
+    {
+      label: "Samsung",
+      id: "Samsung",
+    },
+    {
+      label: "Huawei",
+      id: "Huawei",
+    },
+    {
+      label: "Xiaomi",
+      id: "Xiaomi",
+    },
+    {
+      label: "Nike",
+      id: "Nike",
+    },
+    {
+      label: "Reebook",
+      id: "Reebook",
+    },
+    {
+      label: "Adidas",
+      id: "Adidas",
+    },
+    {
+      label: "Philosophy",
+      id: "Philosophy",
+    },
+  ],
+};
+
+export const ShrotOptions = [
+  {
+    label: "Ascending",
+    id: "Ascending",
+  },
+  {
+    label: "Descending",
+    id: "Descending",
+  },
+  {
+    label: "Price : Low to High",
+    id: "Price : Low to High",
+  },
+  {
+    label: " Price : High to Low",
+    id: "Price : High to Low",
+  },
+  {
+    label: "Newest",
+    id: "Newest",
+  },
+  {
+    label: "Title : A to Z",
+    id: "Title : A to Z",
+  },
+  {
+    label: "Title : Z to A",
+    id: "Title : Z to A",
+  },
+];
