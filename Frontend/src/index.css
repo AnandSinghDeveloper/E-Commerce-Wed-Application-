@@ -122,10 +122,9 @@
 
 .cart {
   
-  background-color: #fff;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 0 0 rgba(0,0,0,0);
+ 
+
+  
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   align-items: center;

@@ -101,7 +101,7 @@ const ADproducts = () => {
           Add New Product
         </Button>
       </div>
-      <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-7   card ">
+      <div className="grid  md:grid-cols-2 lg:grid-cols-4 gap-7   card ">
         {productsList &&
           productsList.length > 0 &&
           productsList.map((product, index) => {

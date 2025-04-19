@@ -13,9 +13,9 @@ const ProductTile = ({
   console.log(product);
 
   return (
-    <Card className={"  border-[1px]   backdrop-blur-md  cart"}>
+    <Card className={" shadow-sm  p-0  cart"}>
       <div>
-        <div className=" w-full relative top-0 pl-5 pr-5">
+        <div className=" w-full relative top-0 ">
           <img
             src={product.image}
             alt={product.title}
@@ -44,14 +44,14 @@ const ProductTile = ({
             </span>
           </div>
         </CardContent>
-        <CardFooter className={"flex w-full  mt-3 justify-between  "}>
+        <CardFooter className={"flex w-full  mt-3 mb-3 justify-center flex-col  "}>
           <Button
             onClick={() => {
               setCurrentEditedID(product._id);
               setOpenCreateProduct(true);
               setFromdata(product);
             }}
-            className={"mb-2  bg-gray-400 hover:bg-gray-500"}
+            className={"mb-2 w-full bg-white text-black border hover:bg-primary hover:text-white"}
           >
             {" "}
             Edit{" "}
@@ -60,7 +60,7 @@ const ProductTile = ({
             onClick={() => {
               HandleDelate(product._id);
             }}
-            className={" bg-slate-400 hover:bg-slate-500"}
+            className={" w-full bg-muted-foreground text-white"}
           >
             {" "}
             Delete{" "}

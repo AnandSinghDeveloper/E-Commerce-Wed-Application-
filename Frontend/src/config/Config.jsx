@@ -236,14 +236,8 @@ export const FiltersOptions = {
 };
 
 export const ShrotOptions = [
-  {
-    label: "Ascending",
-    id: "Ascending",
-  },
-  {
-    label: "Descending",
-    id: "Descending",
-  },
+ 
+  
   {
     label: "Price : Low to High",
     id: "Price : Low to High",
@@ -252,10 +246,7 @@ export const ShrotOptions = [
     label: " Price : High to Low",
     id: "Price : High to Low",
   },
-  {
-    label: "Newest",
-    id: "Newest",
-  },
+  
   {
     label: "Title : A to Z",
     id: "Title : A to Z",
