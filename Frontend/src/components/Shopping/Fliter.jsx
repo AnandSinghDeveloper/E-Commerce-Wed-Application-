@@ -13,8 +13,8 @@ const Fliter = ({ fliter, handleFliter }) => {
         {Object.keys(FiltersOptions).map((key, index) => (
           <Fragment>
             <div>
-              <h3 className="text-lg font-medium text-gray-900" key={index}>
-                # {key}
+              <h3 className="text-lg font-medium text-gray-900" key={key.id}>
+                 # {key}
               </h3>
               <div className="grid gap-2 mt-2">
                 {FiltersOptions[key].map((item) => (
@@ -23,9 +23,11 @@ const Fliter = ({ fliter, handleFliter }) => {
                     key={item.id}
                   >
                     <Checkbox
-                      checked= {
-                        fliter&& Object.keys(fliter).length > 0 &&
-                        fliter[key]&& fliter[key].indexOf(item.id) > -1
+                      checked={
+                        fliter &&
+                        Object.keys(fliter).length > 0 &&
+                        fliter[key] &&
+                        fliter[key].indexOf(item.id) > -1
                       }
                       onCheckedChange={() => handleFliter(key, item.id)}
                     />

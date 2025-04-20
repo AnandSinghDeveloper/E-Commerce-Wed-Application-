@@ -111,14 +111,14 @@ const authSlice = createSlice({
       })
       .addCase(Authcheck.pending, (state) => {
         state.isloading = true;
-        console.log(state);
+       // console.log(action);
         
       })
       .addCase(Authcheck.fulfilled, (state, action) => {
         state.user = action.payload.user;
         (state.isloading = false),
           (state.isauthenticated = action.payload.success ? true : false);
-        console.log(action);
+        // console.log(action);
       })
       .addCase(Authcheck.rejected, (state, action) => {
         state.isloading = false;

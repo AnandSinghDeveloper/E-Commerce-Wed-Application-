@@ -156,24 +156,24 @@ export const userMenuItems = [
     path: "/Shop/listing",
   },
   {
-    id: "accessories",
+    id: "Accessories",
     label: "Accessories",
     path: "/Shop/listing",
   },
   {
-    id: "electronics",
+    id: "Electronics",
     label: "Electronics",
     path: "/Shop/listing",
   },
   {
-    id: "books",
+    id: "Books",
     label: "Books",
     path: "/Shop/listing",
   },
 ];
 
 export const FiltersOptions = {
-  Category: [
+  category: [
     {
       label: "Electronics",
       id: "Electronics",
@@ -198,8 +198,12 @@ export const FiltersOptions = {
       label: "Baby",
       id: "Baby",
     },
+    {
+      label: "Books",
+      id: "Books",
+    }
   ],
-  Brand: [
+  brand: [
     {
       label: "Apple",
       id: "Apple",

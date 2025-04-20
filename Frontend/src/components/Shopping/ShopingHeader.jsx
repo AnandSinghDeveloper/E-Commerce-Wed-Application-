@@ -42,7 +42,7 @@ const HeaderRightContent = () => {
   }
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  // console.log(user);
 
   return (
     <div className=" flex lg:items-center lg:flex-row   gap-4 ">

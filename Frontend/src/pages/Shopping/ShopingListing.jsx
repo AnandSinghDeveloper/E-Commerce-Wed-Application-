@@ -12,20 +12,22 @@ import { ArrowUpDown } from "lucide-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchedFilterProducts } from "../../store/Shop/shopProductSlice";
+import { fetchedFilterProducts, getProductsDetails } from "../../store/Shop/shopProductSlice";
 import ShopProductTile from "./ShopProductTile";
 import { useState } from "react";
 import { createSearchParams, useSearchParams } from "react-router-dom";
+import ProductDetails from "@/components/Shopping/ProductDetails";
 
 const ShopingListing = () => {
   const dispatch = useDispatch();
-  const { productsList } = useSelector((state) => state.shopProduct);
+  const { productsList ,productDetails} = useSelector((state) => state.shopProduct);
   const [fliter, setFliter] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [openDetails, setOpenDetails] = useState(false);
 
   const handleSort = (value) => {
-    console.log(value);
+    // console.log(value);
     setSort(value);
   };
 
@@ -65,6 +67,11 @@ const ShopingListing = () => {
     return queryParams.join("&");
   };
 
+  const handleGetProductDetails = (id) => {
+  dispatch(getProductsDetails(id));
+    
+  }
+
   useEffect(() => {
     if (fliter && Object.keys(fliter).length > 0) {
       const createQueryString = createSearchParamsHelper(fliter);
@@ -85,7 +92,17 @@ const ShopingListing = () => {
     dispatch(fetchedFilterProducts({filterParmas: fliter , sortParams : sort}));
   }, [dispatch , sort, fliter]);
 
-  console.log(fliter, searchParams);
+  useEffect(() => {
+    if (productDetails !== null){
+      // console.log(productDetails);
+     
+      
+      
+      setOpenDetails(true)
+    }
+  }, [productDetails])
+
+  // console.log(fliter, searchParams);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr]  gap-6 p-4 md:p-6 w-full ">
@@ -123,11 +140,12 @@ const ShopingListing = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 md:p-6 ">
           {productsList && productsList.length > 0
             ? productsList.map((item) => (
-                <ShopProductTile key={item.id} product={item} />
+                <ShopProductTile key={item.id} handleGetProductDetails={handleGetProductDetails} product={item} />
               ))
             : null}
         </div>
       </div>
+      <ProductDetails open={openDetails} setOpen={setOpenDetails} productDetails={productDetails} />
     </div>
   );
 };

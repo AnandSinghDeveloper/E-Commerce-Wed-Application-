@@ -1,5 +1,4 @@
-const Product = require("../../models/products");
-
+const Products = require("../../models/products");
 
 const getfilterProducts = async (req, res) => {
   try {
@@ -44,7 +43,7 @@ const getfilterProducts = async (req, res) => {
         break;
     }
 
-    const products = await Product.find(filter).sort(sort);
+    const products = await Products.find(filter).sort(sort);
     res.status(200).json({
       message: "Product fetched successfully",
       data: products,
@@ -57,4 +56,31 @@ const getfilterProducts = async (req, res) => {
   }
 };
 
-module.exports = { getfilterProducts };
+const getProductsDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Products.findById(id);
+
+    if (product) {
+      res.status(200).json({
+        success: true,
+        message: "Product fetched successfully",
+        data: product,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports = { getfilterProducts, getProductsDetails };

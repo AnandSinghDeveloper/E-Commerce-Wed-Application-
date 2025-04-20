@@ -17,8 +17,8 @@ const ProductTile = ({
       <div>
         <div className=" w-full relative top-0 ">
           <img
-            src={product.image}
-            alt={product.title}
+            src={product?.image}
+            alt={product?.title}
             className={" w-7xl h-70 object-cover object-center  rounded-b-lg  rounded-t-lg"}
           />
         </div>
@@ -29,15 +29,15 @@ const ProductTile = ({
               "text-2xl text-zinc-900 font-[ubuntu] font-bold mb-2 mt-2"
             }
           >
-            {product.title}
+            {product?.title}
           </h2>
           <div className="flex items-center justify-between mb-2">
             <span
               className={`${
-                product.sellingPrice > 0 ? "line-through " : ""
+                product?.sellingPrice > 0 ? "line-through " : ""
               }font-semibold font-[ubuntu] text-lg  `}
             >
-              ${product.price}
+              ${product?.price}
             </span>
             <span className="font-semibold text-lg font-[ubuntu] text-primary">
               ${product.sellingPrice}
@@ -47,7 +47,7 @@ const ProductTile = ({
         <CardFooter className={"flex w-full  mt-3 mb-3 justify-center flex-col  "}>
           <Button
             onClick={() => {
-              setCurrentEditedID(product._id);
+              setCurrentEditedID(product?._id);
               setOpenCreateProduct(true);
               setFromdata(product);
             }}
@@ -58,7 +58,7 @@ const ProductTile = ({
           </Button>
           <Button
             onClick={() => {
-              HandleDelate(product._id);
+              HandleDelate(product?._id);
             }}
             className={" w-full bg-muted-foreground text-white"}
           >
