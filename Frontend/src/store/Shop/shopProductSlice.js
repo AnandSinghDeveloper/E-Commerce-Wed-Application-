@@ -71,7 +71,7 @@ export const getProductsDetails = createAsyncThunk(
         state.isloading = true;
       })
       .addCase(getProductsDetails.fulfilled, (state, action) => {
-        console.log(action.payload);
+        // console.log(action.payload);
         state.productDetails = action.payload.data;
         state.isloading = false;
       })

@@ -10,7 +10,7 @@ const Fliter = ({ fliter, handleFliter }) => {
         <h5 className="text-xl font-bold text-gray-900">Filters</h5>
       </div>
       <div className="p-4 space-y-4">
-        {Object.keys(FiltersOptions).map((key, index) => (
+        {Object.keys(FiltersOptions).map((key) => (
           <Fragment>
             <div>
               <h3 className="text-lg font-medium text-gray-900" key={key.id}>

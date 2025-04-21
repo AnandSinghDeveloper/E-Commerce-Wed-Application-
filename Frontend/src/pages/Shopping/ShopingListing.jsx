@@ -12,19 +12,30 @@ import { ArrowUpDown } from "lucide-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchedFilterProducts, getProductsDetails } from "../../store/Shop/shopProductSlice";
+import {
+  fetchedFilterProducts,
+  getProductsDetails,
+} from "../../store/Shop/shopProductSlice";
 import ShopProductTile from "./ShopProductTile";
 import { useState } from "react";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import ProductDetails from "@/components/Shopping/ProductDetails";
+import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
 
 const ShopingListing = () => {
   const dispatch = useDispatch();
-  const { productsList ,productDetails} = useSelector((state) => state.shopProduct);
+  const { productsList, productDetails } = useSelector(
+    (state) => state.shopProduct
+  )
+  
   const [fliter, setFliter] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetails, setOpenDetails] = useState(false);
+  const {user}=useSelector((state) => state.auth);
+//  console.log(user.id);
+ 
+  
 
   const handleSort = (value) => {
     // console.log(value);
@@ -68,8 +79,19 @@ const ShopingListing = () => {
   };
 
   const handleGetProductDetails = (id) => {
-  dispatch(getProductsDetails(id));
+    dispatch(getProductsDetails(id));
+  };
+
+  const handleAddtoCart = (getcurrentID) => {
+//  console.log(getcurrentID);
+
+  dispatch(AddToCart({userId:user.id,productId:getcurrentID,quantity:1})).then((data)=>{
+    if(data.payload.success){
+      dispatch(fetchCartitems({userId:user.id}));
+    }
     
+  })
+ 
   }
 
   useEffect(() => {
@@ -85,22 +107,22 @@ const ShopingListing = () => {
   }, []);
 
   useEffect(() => {
-    if( fliter !== null && sort !== null)
-
-    
-
-    dispatch(fetchedFilterProducts({filterParmas: fliter , sortParams : sort}));
-  }, [dispatch , sort, fliter]);
+    if (fliter !== null && sort !== null)
+      dispatch(
+        fetchedFilterProducts({ filterParmas: fliter, sortParams: sort })
+      );
+  }, [dispatch, sort, fliter]);
 
   useEffect(() => {
-    if (productDetails !== null){
+    if (productDetails !== null) {
       // console.log(productDetails);
-     
-      
-      
-      setOpenDetails(true)
+
+      setOpenDetails(true);
     }
-  }, [productDetails])
+  }, [productDetails]);
+
+  // console.log(cartItems);
+  
 
   // console.log(fliter, searchParams);
 
@@ -140,12 +162,21 @@ const ShopingListing = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 md:p-6 ">
           {productsList && productsList.length > 0
             ? productsList.map((item) => (
-                <ShopProductTile key={item.id} handleGetProductDetails={handleGetProductDetails} product={item} />
+                <ShopProductTile
+                  key={item.id}
+                  handleGetProductDetails={handleGetProductDetails}
+                  product={item}
+                  handleAddtoCart={handleAddtoCart}
+                />
               ))
             : null}
         </div>
       </div>
-      <ProductDetails open={openDetails} setOpen={setOpenDetails} productDetails={productDetails} />
+      <ProductDetails
+        open={openDetails}
+        setOpen={setOpenDetails}
+        productDetails={productDetails}
+      />
     </div>
   );
 };

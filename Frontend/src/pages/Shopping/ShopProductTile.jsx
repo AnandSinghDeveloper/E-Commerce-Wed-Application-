@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
 
-const ShopProductTile = ({ product, handleGetProductDetails }) => {
+const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) => {
   return (
-    <Card className={"w-full mx-auto max-w-sm  p-0"}>
-      <div onClick={() => handleGetProductDetails(product._id)}>
+    <Card className={"w-full mx-auto max-w-sm gap-0 p-0"}>
+      <div className="" onClick={() => handleGetProductDetails(product._id)}>
         <div className="relative ">
           <img
             src={product.image}
@@ -46,10 +46,11 @@ const ShopProductTile = ({ product, handleGetProductDetails }) => {
             ) : null}
           </div>
         </CardContent>
-        <CardFooter className={"w-full"}>
-          <Button className={"w-full mb-5"}>Add to Cart</Button>
-        </CardFooter>
+    
       </div>
+      <CardFooter className={"w-full"}>
+          <Button onClick={() => handleAddtoCart(product?._id)} className={"w-full  mb-5"}>Add to Cart</Button>
+        </CardFooter>
     </Card>
   );
 };

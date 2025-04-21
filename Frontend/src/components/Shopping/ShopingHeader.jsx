@@ -1,5 +1,5 @@
 import { CircleUserRound, HomeIcon, LogOut, ShoppingCart } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SheetTrigger, Sheet, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
@@ -19,8 +19,12 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logout } from "@/store/auth-slice/auth-slice";
+import CartWrapper from "./CartWrapper";
+import { fetchCartitems } from "@/store/Shop/shopCartSlice";
 
 const MenuItems = () => {
+     
+
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:flex-row lg:items-center gap-6  ">
       {userMenuItems.map((item) => {
@@ -36,20 +40,34 @@ const MenuItems = () => {
 const HeaderRightContent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const {cartItems} = useSelector((state) => state.shopCart);
+  const [openCartSheet, setOpenCartSheet] = useState(false) 
+
+ 
+  
 
   const handleLogOut = () => {
     dispatch(logout());
   }
+
+  useEffect(() => {
+    dispatch(fetchCartitems({userId:user.id}));
+    
+    
+  },[dispatch])
 
   const { user } = useSelector((state) => state.auth);
   // console.log(user);
 
   return (
     <div className=" flex lg:items-center lg:flex-row   gap-4 ">
-      <Button variant={"outline"} size={"icon"}>
+      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      <Button onClick={() => setOpenCartSheet(true)} variant={"outline"} size={"icon"}>
         <ShoppingCart className="w-6 h-6" />
         <span className="sr-only"> User Cart</span>
       </Button>
+      <CartWrapper cartItems={cartItems &&cartItems.items && cartItems.items.lenght > 0 ? cartItems.items : []} />
+      </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger aschild>
           <Avatar className=" text-white bg-black">
