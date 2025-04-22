@@ -113,7 +113,7 @@ const DeleteCartitem = async (req, res) => {
     const { userId, productId } = req.params;
 
     if (!userId || !productId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Please provide all the required fields",
       });
@@ -125,20 +125,21 @@ const DeleteCartitem = async (req, res) => {
     });
 
     if (!cart) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Cart not found",
       });
     }
 
+
     cart.items = cart.items.filter(
-      (item) => item.productId._id.toString() === productId
+      (item) => item.productId._id.toString() !== productId
     );
     await cart.save();
 
     await cart.populate({
       path: "items.productId",
-      select: "image title price selllingPrice",
+      select: "image title price sellingPrice",
     });
 
     const populatedCartItems = cart.items.map((item) => ({
@@ -162,11 +163,11 @@ const DeleteCartitem = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-
       message: "Internal Server Error",
     });
   }
 };
+
 
 const UpdateCartitemQuantity = async (req, res) => {
   try {

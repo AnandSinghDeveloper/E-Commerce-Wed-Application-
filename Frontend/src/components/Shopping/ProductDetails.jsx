@@ -5,8 +5,32 @@ import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { StarIcon } from "lucide-react";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
 
 const ProductDetails = ({ open, setOpen, productDetails }) => {
+  const dispatch = useDispatch();
+
+  const {user} =  useSelector((state) => state.auth);
+
+  const handleAddtoCart = (getcurrentID) => {
+    console.log(getcurrentID);
+    
+
+    
+      dispatch(AddToCart({userId:user?.id,productId:getcurrentID,quantity:1})).then((data)=>{
+        console.log(data);
+        
+        if(data.payload.success){
+          toast.success(data.payload.message);
+          dispatch(fetchCartitems({userId:user.id}));
+        }
+        
+      })
+     
+      }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -61,7 +85,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
             </span>
           </div>
           <div>
-            <Button className={"w-full mb-3"}>Add to Cart</Button>
+            <Button onClick={() => handleAddtoCart(productDetails)} className={"w-full mb-3"}>Add to Cart</Button>
             <Separator />
             <h2 className="text-xl font-bold mb-3 mt-3 bg-transparent backdrop-blur-md">
               Reviews

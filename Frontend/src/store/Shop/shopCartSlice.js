@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { data } from "react-router-dom";
+
 
 const initialState = {
   isloading: false,
@@ -33,22 +33,23 @@ export const fetchCartitems = createAsyncThunk(
   }
 );
 
-export const UpdateCartitemQuantity = createAsyncThunk(
+export const DeleteCartitem = createAsyncThunk(
   "shopCart/UpdateCartitemQuantity",
   async ({ userId, productId }) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/cart/updateCartitemQuantity/${userId}/${productId}`
+    const response = await axios.delete(
+      `http://localhost:5000/api/cart/deleteCartitem/${userId}/${productId}`
     );
-
+   console.log(response?.data);
+   
     return response?.data;
   }
 );
 
-export const DeleteCartitem = createAsyncThunk(
+export const UpdateCartitemQuantity = createAsyncThunk(
   "shopCart/DeleteCartitem",
   async ({ userId, productId, quantity }) => {
-    const response = await axios.delete(
-      " http://localhost:5000/api/cart/deleteCartitem/",
+    const response = await axios.put(
+      " http://localhost:5000/api/cart/updateCartitemQuantity/",
       { userId, productId, quantity }
     );
 

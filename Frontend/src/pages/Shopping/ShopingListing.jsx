@@ -21,6 +21,7 @@ import { useState } from "react";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import ProductDetails from "@/components/Shopping/ProductDetails";
 import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
+import { toast } from "sonner";
 
 const ShopingListing = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,7 @@ const ShopingListing = () => {
 
   dispatch(AddToCart({userId:user.id,productId:getcurrentID,quantity:1})).then((data)=>{
     if(data.payload.success){
+      toast.success(data.payload.message);
       dispatch(fetchCartitems({userId:user.id}));
     }
     

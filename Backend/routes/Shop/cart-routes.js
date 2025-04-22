@@ -9,7 +9,7 @@ const {
 
 router.post("/addToCart", AddToCart);
 router.get('/fetchCartitems/:userId',fetchCartitems);
-router.delete('/deleteCartitem/:userID/:productId', DeleteCartitem);
+router.delete('/deleteCartitem/:userId/:productId', DeleteCartitem);
 router.put('/updateCartitemQuantity', UpdateCartitemQuantity);
 
 module.exports = router;

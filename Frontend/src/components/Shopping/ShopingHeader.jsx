@@ -44,6 +44,8 @@ const HeaderRightContent = () => {
   const [openCartSheet, setOpenCartSheet] = useState(false) 
 
  
+  // console.log(cartItems.items);
+  
   
 
   const handleLogOut = () => {
@@ -66,7 +68,7 @@ const HeaderRightContent = () => {
         <ShoppingCart className="w-6 h-6" />
         <span className="sr-only"> User Cart</span>
       </Button>
-      <CartWrapper cartItems={cartItems &&cartItems.items && cartItems.items.lenght > 0 ? cartItems.items : []} />
+      <CartWrapper cartItems={cartItems.items} />
       </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger aschild>

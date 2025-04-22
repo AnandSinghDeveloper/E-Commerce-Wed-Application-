@@ -1,4 +1,4 @@
-import { LayoutDashboard } from "lucide-react";
+import { Cable, ContactRound, Footprints, LayoutDashboard, Shapes, Venus } from "lucide-react";
 import { ShoppingBasket } from "lucide-react";
 import { BadgeCheck } from "lucide-react";
 
@@ -260,3 +260,39 @@ export const ShrotOptions = [
     id: "Title : Z to A",
   },
 ];
+
+
+ export const categoryswithImg= [
+  {
+    label: "Electronics",
+    id: "Electronics",
+    icon: <Cable />
+  },
+  {
+    label: "Toys",
+    id: "Toys",
+    icon:<Shapes/>
+  },
+  {
+    label: "Men",
+    id: "Men",
+    icon:<ContactRound />
+  },
+  {
+    label: "Women",
+    id: "Women",
+    icon : <Venus />
+  },
+  {
+    label: "Footwear",
+    id: "Footwear",
+    icon : <Footprints />
+
+  },
+ 
+  {
+    label: "Books",
+    id: "Books",
+    icon:<BookOpenCheck />
+  }
+]
