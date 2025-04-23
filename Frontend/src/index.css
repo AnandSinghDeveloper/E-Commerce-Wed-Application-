@@ -148,3 +148,23 @@
   }
 }
 
+
+
+.nav-item {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: #333;
+  background-image: linear-gradient(to right, #bdc1c4 0%, #1b1f21 100%);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s ease;
+  padding-bottom: 5px;
+}
+
+.nav-item:hover {
+  background-size: 100% 2px;
+}
+
+

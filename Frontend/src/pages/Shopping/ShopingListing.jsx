@@ -129,7 +129,7 @@ const ShopingListing = () => {
   // console.log(fliter, searchParams);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr]  gap-6 p-4 md:p-6 w-full ">
+    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] mt-15 gap-6 p-4 md:p-6 w-full ">
       <Fliter fliter={fliter} handleFliter={handleFliter} />
       <div className=" bg-background w-full shadow-sm rounded-lg ">
         <div className=" p-4 border-b-2  flex justify-between items-center">

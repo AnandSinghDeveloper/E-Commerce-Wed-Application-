@@ -1,5 +1,4 @@
-import { Cable, ContactRound, Footprints, LayoutDashboard, Shapes, Venus } from "lucide-react";
-import { ShoppingBasket } from "lucide-react";
+import { ShoppingBasket, LayoutDashboard } from "lucide-react";
 import { BadgeCheck } from "lucide-react";
 
 export const registerfromconfig = [
@@ -106,11 +105,13 @@ export const ProductsfromElements = [
     options: [
       { label: "Electronics", id: "Electronics" },
       { label: "Toys", id: "Toys" },
-      { label: "Clothes", id: "Clothes" },
+      { label: "Footwear", id: "Footwear" },
+      { label: "Clothing", id: "Clothing" },
       { label: "Books", id: "Books" },
       { label: "Men", id: "Men" },
       { label: "Women", id: "Women" },
       { label: "Baby", id: "Baby" },
+      { label: "Accessories", id: "Accessories" },
     ],
   },
   {
@@ -118,18 +119,13 @@ export const ProductsfromElements = [
     componentType: "select",
     name: "brand",
     options: [
-      { label: "Apple", id: "Apple" },
-      { label: "Samsung", id: "Samsung" },
-      { label: "Huawei", id: "Huawei" },
+      { label: "Apple & Samsung", id: "Apple&Samsung" },
+      { label: "Xiaomi & OnePLus+", id: "Xiaomi&OnePLus+" },
+      { label: "Nike & Adidas", id: "Nike&Adidas" },
       { label: "Xiaomi", id: "Xiaomi" },
-      { label: "LG", id: "LG" },
-      { label: "Nike", id: "Nike" },
-      { label: "Adidas", id: "Adidas" },
-      { label: "Reebook", id: "Reebook" },
-      { label: "Asics", id: "Asics" },
-      { label: "Philosophy", id: "Philosophy" },
-      { label: "History", id: "History" },
-      { label: "Science", id: "Science" },
+      { label: "HnM&Zara", id: "HnM&Zara" },
+      { label: "Philosophy & History", id: "Philosophy&History" },
+      { label: "Others", id: "Others" },
     ],
   },
 ];
@@ -151,7 +147,7 @@ export const userMenuItems = [
     path: "/Shop/listing",
   },
   {
-    id: "Kids",
+    id: "Baby",
     label: "Kids",
     path: "/Shop/listing",
   },
@@ -163,6 +159,16 @@ export const userMenuItems = [
   {
     id: "Electronics",
     label: "Electronics",
+    path: "/Shop/listing",
+  },
+  {
+    id: "Footwear",
+    label: "Footwear",
+    path: "/Shop/listing",
+  },
+  {
+    id: "Toys",
+    label: "Toys",
     path: "/Shop/listing",
   },
   {
@@ -178,6 +184,15 @@ export const FiltersOptions = {
       label: "Electronics",
       id: "Electronics",
     },
+    {
+      label: "Accessories",
+      id: "Accessories",
+    },
+    {
+      label: "Clothing",
+      id: "Clothing",
+    },
+
     {
       label: "Toys",
       id: "Toys",
@@ -201,47 +216,36 @@ export const FiltersOptions = {
     {
       label: "Books",
       id: "Books",
-    }
+    },
   ],
   brand: [
     {
-      label: "Apple",
-      id: "Apple",
+      label: "Apple&Samsung",
+      id: "Apple&Samsung",
+    },
+    { label: "HnM&Zara", id: "HnM&Zara" },
+
+    {
+      label: "Xiaomi&OnePLus+",
+      id: "Xiaomi&OnePLus+",
     },
     {
-      label: "Samsung",
-      id: "Samsung",
+      label: "Nike&Adidas",
+      id: "Nike&Adidas",
+    },
+
+    {
+      label: "Philosophy&History",
+      id: "Philosophy&History",
     },
     {
-      label: "Huawei",
-      id: "Huawei",
-    },
-    {
-      label: "Xiaomi",
-      id: "Xiaomi",
-    },
-    {
-      label: "Nike",
-      id: "Nike",
-    },
-    {
-      label: "Reebook",
-      id: "Reebook",
-    },
-    {
-      label: "Adidas",
-      id: "Adidas",
-    },
-    {
-      label: "Philosophy",
-      id: "Philosophy",
+      label: "Others",
+      id: "Others",
     },
   ],
 };
 
 export const ShrotOptions = [
- 
-  
   {
     label: "Price : Low to High",
     id: "Price : Low to High",
@@ -250,7 +254,7 @@ export const ShrotOptions = [
     label: " Price : High to Low",
     id: "Price : High to Low",
   },
-  
+
   {
     label: "Title : A to Z",
     id: "Title : A to Z",
@@ -260,39 +264,3 @@ export const ShrotOptions = [
     id: "Title : Z to A",
   },
 ];
-
-
- export const categoryswithImg= [
-  {
-    label: "Electronics",
-    id: "Electronics",
-    icon: <Cable />
-  },
-  {
-    label: "Toys",
-    id: "Toys",
-    icon:<Shapes/>
-  },
-  {
-    label: "Men",
-    id: "Men",
-    icon:<ContactRound />
-  },
-  {
-    label: "Women",
-    id: "Women",
-    icon : <Venus />
-  },
-  {
-    label: "Footwear",
-    id: "Footwear",
-    icon : <Footprints />
-
-  },
- 
-  {
-    label: "Books",
-    id: "Books",
-    icon:<BookOpenCheck />
-  }
-]

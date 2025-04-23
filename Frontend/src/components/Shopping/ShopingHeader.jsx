@@ -26,10 +26,10 @@ const MenuItems = () => {
      
 
   return (
-    <nav className="flex flex-col mb-3 lg:mb-0 lg:flex-row lg:items-center gap-6  ">
+    <nav className="flex flex-col mb-3  lg:mb-0 lg:flex-row lg:items-center gap-6  ">
       {userMenuItems.map((item) => {
         return (
-          <Link className="font-medium text-sm " to={item.path} key={item.id}>
+          <Link className=" nav-item font-medium text-sm  " to={item.path} key={item.id}>
             {item.label}
           </Link>
         );
@@ -103,7 +103,7 @@ const ShopingHeader = () => {
 
   const [menuItemOpen, setMenuItemOpen] = useState(false);
   return (
-    <header className="shoping-header sticky top-0 z-50 bg-white border-b ">
+    <header className="shoping-header w-full top-0 z-50 fixed bg-transparent backdrop-blur-lg shadow-sm ">
       <div className="flex items-center justify-between   px-4 md-px-6 h-16">
         <Link className="flex items-center gap-2  " to="/shop/home">
           <HomeIcon className="w-6 h-6" />
