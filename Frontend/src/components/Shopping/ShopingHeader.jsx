@@ -21,17 +21,29 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logout } from "@/store/auth-slice/auth-slice";
 import CartWrapper from "./CartWrapper";
 import { fetchCartitems } from "@/store/Shop/shopCartSlice";
+import { Label } from "../ui/label";
 
 const MenuItems = () => {
-     
+     const navigate = useNavigate ();
+
+     const handleNavigate = (getcurrentItem) => {
+      sessionStorage.removeItem("fliter");
+      const currentfilter = 
+        getcurrentItem.id !== 'Home' ? { category: [getcurrentItem.id] } : null;
+  
+      sessionStorage.setItem("fliter", JSON.stringify(currentfilter));
+      navigate(getcurrentItem.path);
+
+    };
+  
 
   return (
     <nav className="flex flex-col mb-3  lg:mb-0 lg:flex-row lg:items-center gap-6  ">
       {userMenuItems.map((item) => {
         return (
-          <Link className=" nav-item font-medium text-sm  " to={item.path} key={item.id}>
+          <Label onClick={() =>{ handleNavigate(item)}} key={item.id} className=" nav-item cursor-pointer font-medium text-sm  " >
             {item.label}
-          </Link>
+          </Label>
         );
       })}
     </nav>

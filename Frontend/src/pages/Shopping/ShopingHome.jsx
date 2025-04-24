@@ -34,9 +34,12 @@ import {
   Volleyball,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchedFilterProducts } from "@/store/Shop/shopProductSlice";
+import { fetchedFilterProducts, getProductsDetails } from "@/store/Shop/shopProductSlice";
 import ShopProductTile from "./ShopProductTile";
 import { useNavigate } from "react-router-dom";
+import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
+import { toast } from "sonner";
+import ProductDetails from "@/components/Shopping/ProductDetails";
 
 const categoryswithImg = [
   {
@@ -123,18 +126,35 @@ const ShopingHome = () => {
   const { productsList, productDetails } = useSelector(
     (state) => state.shopProduct
   );
+   const [openDetails, setOpenDetails] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   const handleNavigate = (getcurrentItem, selection) => {
-    sessionStorage.removeItem('fliter');
-  const currentfilter ={
-    [selection]:[getcurrentItem.id]
-  }
+    sessionStorage.removeItem("fliter");
+    const currentfilter = {
+      [selection]: [getcurrentItem.id],
+    };
 
     sessionStorage.setItem("fliter", JSON.stringify(currentfilter));
     navigate("/shop/listing");
   };
- 
 
+   const handleGetProductDetails = (id) => {
+      dispatch(getProductsDetails(id));
+
+    };
+    const handleAddtoCart = (getcurrentID) => {
+      //  console.log(getcurrentID);
+      
+        dispatch(AddToCart({userId:user.id,productId:getcurrentID,quantity:1})).then((data)=>{
+          if(data.payload.success){
+            toast.success(data.payload.message);
+            dispatch(fetchCartitems({userId:user.id}));
+          }
+          
+        })
+       
+        }
 
   const slides = [
     bainer1,
@@ -164,6 +184,14 @@ const ShopingHome = () => {
       })
     );
   }, [dispatch]);
+  
+  useEffect(() => {
+      if (productDetails !== null) {
+        // console.log(productDetails);
+  
+        setOpenDetails(true);
+      }
+    }, [productDetails]);
 
   const newProductslist = productsList.slice(0, 4);
 
@@ -215,7 +243,7 @@ const ShopingHome = () => {
             {categoryswithImg.map((category, index) => {
               return (
                 <Card
-                  onClick={() => handleNavigate(category, 'category')}
+                  onClick={() => handleNavigate(category, "category")}
                   key={index}
                   className={
                     " cursor-pointer hover:shadow-lg transition-shadow "
@@ -242,7 +270,7 @@ const ShopingHome = () => {
             {brandwithimg.map((brand, index) => {
               return (
                 <Card
-                onClick={() => handleNavigate(brand, 'brand')}
+                  onClick={() => handleNavigate(brand, "brand")}
                   key={index}
                   className={
                     " cursor-pointer hover:shadow-lg transition-shadow "
@@ -272,12 +300,17 @@ const ShopingHome = () => {
         </div>
         <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
           {newProductslist && newProductslist.length > 0
-            ? newProductslist.map((product) => {
-                return <ShopProductTile product={product} />;
+            ? newProductslist.map((product ,index) => {
+                return <ShopProductTile handleAddtoCart={handleAddtoCart} handleGetProductDetails={handleGetProductDetails} product={product} key={index} />;
               })
             : null}
         </div>
       </selection>
+      <ProductDetails
+        open={openDetails}
+        setOpen={setOpenDetails}
+        productDetails={productDetails}
+      />
     </div>
   );
 };
