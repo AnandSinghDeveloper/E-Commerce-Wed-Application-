@@ -1,5 +1,7 @@
 import React from 'react'
 import account from '../../assets/account3.webp'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { TabsContent } from '@/components/ui/tabs'
 
 const ShopingAccount = () => {
   return (
@@ -9,7 +11,24 @@ const ShopingAccount = () => {
         <img src={account} alt="bainer img" className=' w-full h-full object-cover  object' />
 
       </div>
-      
+      <div className=' container mx-auto grid grid-cols-1 gap-8 py-8'>
+        <div className='flex flex-col p-6 rounded-lg border bg-background shadow-sm'>
+          <Tabs defaultValue='orders'>
+            <TabsList>
+              <TabsTrigger value='orders'>Orders</TabsTrigger>
+              <TabsTrigger value='address'>Address</TabsTrigger>
+            </TabsList>
+            <TabsContent value='orders'>
+              <h2>Orders</h2>
+            </TabsContent>
+            <TabsContent value='address'>
+              <h2>Address</h2>
+            </TabsContent>
+          </Tabs>
+
+        </div>
+
+      </div>
       
     </div>
   )
