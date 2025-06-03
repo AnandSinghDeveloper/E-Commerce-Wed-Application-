@@ -3,27 +3,14 @@ const Address = require("../../models/Address");
 const addAddress = async (req, res) => {
   try {
     const {
-      name,
       address,
       city,
-      state,
-      Pincode,
-      country,
+      pincode,
       phone,
-      email,
+      notes,
       userId,
     } = req.body;
-    if (
-      !name ||
-      !address ||
-      !city ||
-      !state ||
-      !Pincode ||
-      !country ||
-      !phone ||
-      !email ||
-      !userId
-    ) {
+    if (!address || !city || !pincode || !phone || !notes || !userId) {
       res.status(400).json({
         success: false,
         message: "Please provide all the required fields",
@@ -31,14 +18,12 @@ const addAddress = async (req, res) => {
     }
 
     const Newaddress = new Address({
-      name,
+     
       address,
-      city,
-      state,
-      Pincode,
-      country,
-      phone,
-      email,
+      city,     
+      pincode,      
+      phone,     
+      notes,
       userId,
     });
 
@@ -115,7 +100,7 @@ const updateAddress = async (req, res) => {
       res.status(404).json({
         success: false,
         message: "Address not found",
-      })
+      });
     }
 
     res.status(200).json({
@@ -123,8 +108,6 @@ const updateAddress = async (req, res) => {
       message: "Address updated successfully",
       data: updateAddress,
     });
-
-
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -136,22 +119,24 @@ const updateAddress = async (req, res) => {
 
 const deleteAddress = async (req, res) => {
   try {
-          
     const { userId, addressId } = req.params;
     if (!userId || !addressId) {
       res.status(400).json({
         success: false,
         message: "Please provide all the required fields",
-      })
+      });
     }
 
-    const deleteAddress = await Address.findOneAndDelete({ userId, _id: addressId });
+    const deleteAddress = await Address.findOneAndDelete({
+      userId,
+      _id: addressId,
+    });
 
     if (!deleteAddress) {
       res.status(404).json({
         success: false,
         message: "Address not found",
-      })
+      });
     }
 
     res.status(200).json({
@@ -159,9 +144,6 @@ const deleteAddress = async (req, res) => {
       message: "Address deleted successfully",
       data: deleteAddress,
     });
-
-
-
   } catch (error) {
     console.log(error);
     res.status(500).json({

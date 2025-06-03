@@ -264,3 +264,41 @@ export const ShrotOptions = [
     id: "Title : Z to A",
   },
 ];
+
+export const AddressFromConfig = [
+  {
+    label: "Address",
+    placeholder: "Enter your address",
+    type: "text",
+    componentType: "input",
+    name: "address",
+  },
+  {
+    label: "City",
+    placeholder: "Enter your city",
+    type: "text",
+    componentType: "input",
+    name: "city"
+  },
+  {
+    label: "Pincode",
+    placeholder: "Enter your pincode",
+    type: "text",
+    componentType: "input",
+    name: "pincode"
+  },
+  {
+    label: "Phone",
+    placeholder: "Enter your phone",
+    type: "text",
+    componentType: "input",
+    name: "phone"
+  },
+  {
+    label: "Notes",
+    placeholder: "Enter your notes",
+    type: "text",
+    componentType: "textarea",
+    name: "notes"
+  }
+] 

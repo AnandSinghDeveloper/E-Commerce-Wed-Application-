@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) => {
   return (
@@ -35,13 +36,13 @@ const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) =
             <span
               className={`${
                 product.sellingPrice > 0 ? "line-through" : ""
-              } font-semibold text-lg  text-primary`}
+              } font-semibold text-lg flex items-center  text-primary`}
             >
-              ${product.price}
+              <span><FaIndianRupeeSign style={{fontSize:"15px"}}/></span>{product.price}
             </span>
             {product.sellingPrice > 0 ? (
-              <span className="font-semibold text-lg  text-primary">
-                ${product.sellingPrice}
+              <span className="font-semibold text-lg flex items-center text-primary">
+                  <span><FaIndianRupeeSign style={{fontSize:"15px"}}/></span>{product.sellingPrice}
               </span>
             ) : null}
           </div>

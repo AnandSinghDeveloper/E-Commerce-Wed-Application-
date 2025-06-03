@@ -40,6 +40,18 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --animate-shine: shine var(--duration) infinite linear;
+  @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+    }
+  50% {
+    background-position: 100% 100%;
+    }
+  to {
+    background-position: 0% 0%;
+    }
+  }
 }
 
 :root {
@@ -121,10 +133,7 @@
 }
 
 .cart {
-  
- 
 
-  
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   align-items: center;
@@ -148,8 +157,6 @@
   }
 }
 
-
-
 .nav-item {
   display: inline-block;
   position: relative;
@@ -167,5 +174,3 @@
 .nav-item:hover {
   background-size: 100% 2px;
 }
-
-

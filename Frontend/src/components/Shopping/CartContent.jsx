@@ -7,10 +7,17 @@ import {
   UpdateCartitemQuantity,
 } from "@/store/Shop/shopCartSlice";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const CartContent = ({ cartitem }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+ 
+
+
+ 
+
 
   const handleDeleteCartItem = (getCartitem) => {
     dispatch(
@@ -88,7 +95,7 @@ const CartContent = ({ cartitem }) => {
 
         <Trash
           onClick={() => {
-            handleDeleteCartItem(cartitem);
+            handleDeleteCartItem(cartitem)
           }}
           className="h-5 w-5 mr-4 cursor-pointer text-red-900  "
         />
@@ -97,4 +104,5 @@ const CartContent = ({ cartitem }) => {
   );
 };
 
-export default CartContent;
+
+export default CartContent
