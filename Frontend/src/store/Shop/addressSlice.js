@@ -27,10 +27,10 @@ export const FetchAddress = createAsyncThunk(
 
 export const UpdateAddress = createAsyncThunk(
   "/address/UpdateAddress",
-  async ({ userId, addressId, FormData}) => {
+  async ({ userId, addressId, formData}) => {
     const response = await axios.put(
       `http://localhost:5000/api/address/updateAddress/${userId}/${addressId}`,
-      FormData
+      formData
     );
 
     return response?.data;
@@ -47,6 +47,7 @@ export const DeleteAddress = createAsyncThunk(
 )
 
 const addressSlice = createSlice({
+  
   name: "address",
   initialState,
   reducers: {},

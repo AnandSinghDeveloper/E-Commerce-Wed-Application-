@@ -8,7 +8,7 @@ import {
 import { Label } from "@/components/ui/label";
 
 
-const AddressCard = ({ addressInfo }) => {
+const AddressCard = ({ addressInfo , handleDelete , handleEdit }) => {
   return (
     <Card className="relative overflow-hidden max-w-[350px] w-full">
       {/* <ShineBorder shineColor={["#991F87", "#", "#FFAA43"]} /> */}
@@ -41,8 +41,8 @@ const AddressCard = ({ addressInfo }) => {
         </div>
       </CardContent>
       <CardFooter className={"flex justify-between"}>
-        <Button className="px-10">Edit</Button>
-        <Button className="px-10">Delete</Button>
+        <Button className="px-10" onClick={()=>{ handleEdit(addressInfo)}} >Edit</Button>
+        <Button className="px-10" onClick={()=>{ handleDelete(addressInfo)}} >Delete</Button>
       </CardFooter>
     </Card>
   );
