@@ -7,7 +7,7 @@ import {
   UpdateCartitemQuantity,
 } from "@/store/Shop/shopCartSlice";
 import { toast } from "sonner";
-import { useState } from "react";
+
 
 const CartContent = ({ cartitem }) => {
   const dispatch = useDispatch();

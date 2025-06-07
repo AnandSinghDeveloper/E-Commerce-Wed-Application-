@@ -5,7 +5,11 @@ import CommonFrom from "../Common/CommonFrom";
 import { AddressFromConfig } from "@/config/Config";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddAddress, DeleteAddress , UpdateAddress} from "@/store/Shop/addressSlice";
+import {
+  AddAddress,
+  DeleteAddress,
+  UpdateAddress,
+} from "@/store/Shop/addressSlice";
 import { useEffect } from "react";
 import { FetchAddress } from "@/store/Shop/addressSlice";
 import { toast } from "sonner";
@@ -28,42 +32,46 @@ const Address = () => {
 
   // console.log(addressList);
 
-  if(addressList.length >= 3 && currentEditedID === null){
-    setFromdata(initialAddressFormData);
-    toast.error({
-      title: "You can't add more than 3 addresses",
-      variant: "distractive",
-    });
-    return;
-  }
+  // 
 
   const handleManageAddress = (e) => {
     e.preventDefault();
-    console.log(fromdata);  
+    console.log(fromdata);
     console.log(currentEditedID);
-      
-     currentEditedID !== null ? dispatch(UpdateAddress({ userId: user?.id, addressId: currentEditedID, formData: fromdata})).then((data) => {
-      if (data?.payload?.success) {
-        console.log(data);
-        console.log(fromdata);
-        
-        setCurrentEditedID(null);
-        setFromdata(initialAddressFormData);
-         dispatch(FetchAddress(user?.id));
-        toast.success(data?.payload?.message);
-        
-      }
-     }) :
 
-    dispatch(AddAddress({ ...fromdata, userId: user?.id })).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(FetchAddress(user?.id));
-        setFromdata(initialAddressFormData);
-        toast.success(data?.payload?.message);
-      } else {
-        toast.error(data?.payload?.message);
-      }
-    });
+    if (addressList.length >= 3 && currentEditedID === null) {
+    setFromdata(initialAddressFormData);
+    toast.error("You can add only 3 address");
+    return;
+  }
+
+    currentEditedID !== null
+      ? dispatch(
+          UpdateAddress({
+            userId: user?.id,
+            addressId: currentEditedID,
+            formData: fromdata,
+          })
+        ).then((data) => {
+          if (data?.payload?.success) {
+            console.log(data);
+            console.log(fromdata);
+
+            setCurrentEditedID(null);
+            setFromdata(initialAddressFormData);
+            dispatch(FetchAddress(user?.id));
+            toast.success(data?.payload?.message);
+          }
+        })
+      : dispatch(AddAddress({ ...fromdata, userId: user?.id })).then((data) => {
+          if (data?.payload?.success) {
+            dispatch(FetchAddress(user?.id));
+            setFromdata(initialAddressFormData);
+            toast.success(data?.payload?.message);
+          } else {
+            toast.error(data?.payload?.message);
+          }
+        });
   };
   const handleDelete = (getcurrentAddress) => {
     // console.log(getcurrentAddress);
@@ -81,21 +89,18 @@ const Address = () => {
   };
   const handleEdit = (address) => {
     console.log(address);
-    
+
     setCurrentEditedID(address._id);
-    
-    setFromdata(
-      {
-        ...fromdata,
-        address : address?.address,
-        city : address?.city,
-        pincode : address?.pincode,
-        phone : address?.phone,
-        notes : address?.notes
-      }
-    );
-    
-  }
+
+    setFromdata({
+      ...fromdata,
+      address: address?.address,
+      city: address?.city,
+      pincode: address?.pincode,
+      phone: address?.phone,
+      notes: address?.notes,
+    });
+  };
 
   useEffect(() => {
     dispatch(FetchAddress(user?.id));
@@ -103,7 +108,7 @@ const Address = () => {
 
   return (
     <Card className="p-0 w-[100%] lg:w-[90%] shadow-none border-none">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3 mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 p-3 mb-5">
         {addressList && addressList.length > 0
           ? addressList.map((address, index) => (
               <AddressCard
@@ -127,7 +132,9 @@ const Address = () => {
             setFromdata={setFromdata}
             Formcontorl={AddressFromConfig}
             onSubmit={handleManageAddress}
-            buttonText={  currentEditedID === null ? "Add  Address" : "Edit Address"}
+            buttonText={
+              currentEditedID === null ? "Add  Address" : "Edit Address"
+            }
             color="#9E218F"
           />
         </CardContent>

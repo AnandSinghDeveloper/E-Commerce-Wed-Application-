@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 
 const AddressCard = ({ addressInfo , handleDelete , handleEdit }) => {
   return (
-    <Card className="relative overflow-hidden max-w-[350px] w-full">
+    <Card className="relative overflow-hidden  w-full">
       {/* <ShineBorder shineColor={["#991F87", "#", "#FFAA43"]} /> */}
 
       <CardContent className={"grid gap-4 "}>

@@ -1,5 +1,5 @@
 import React from "react";
-import account from "../../assets/account3.webp";
+import account from "../../assets/Account.jpg";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import Order from "@/components/Shopping/Order";
