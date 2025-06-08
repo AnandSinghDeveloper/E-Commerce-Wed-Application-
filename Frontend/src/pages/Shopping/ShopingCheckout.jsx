@@ -30,10 +30,10 @@ const ShopingCheckout = () => {
           className="w-full h-full object-cover object-left object"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  gap-4 p-3 mb-5 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 shadow-sm   gap-4 p-3 mb-5 ">
         <Address />
 
-        <div className=" flex flex-col gap-4 mt-10">
+        <div className=" flex flex-col gap-4 mt-5 shadow-sm rounded-lg p-5">
           {cartItems && cartItems.items && cartItems.items.length > 0
             ? cartItems.items.map((item, idx) => {
                 return <CartContent key={idx} cartitem={item} />;
