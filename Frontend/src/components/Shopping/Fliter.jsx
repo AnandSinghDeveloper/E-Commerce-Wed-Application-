@@ -13,7 +13,7 @@ const Fliter = ({ fliter, handleFliter }) => {
         {Object.keys(FiltersOptions).map((key,index) => (
           <Fragment>
             <div>
-              <h3 className="text-lg font-medium text-gray-900" key={key.index}>
+              <h3 className="text-lg font-medium text-gray-900" key={index}>
                  # {key}
               </h3>
               <div className="grid gap-2 mt-2">

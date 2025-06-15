@@ -22,11 +22,11 @@ const ShopingAccount = () => {
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>
-            <TabsContent value="orders" >
+            <TabsContent value="orders">
               <Order />
             </TabsContent>
-            <TabsContent value="address" className={ ''}>
-             <Address />
+            <TabsContent value="address" className={""}>
+              <Address />
             </TabsContent>
           </Tabs>
         </div>

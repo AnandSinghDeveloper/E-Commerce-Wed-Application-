@@ -38,11 +38,11 @@ const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) =
                 product.sellingPrice > 0 ? "line-through" : ""
               } font-semibold text-lg flex items-center  text-primary`}
             >
-              <span><FaIndianRupeeSign style={{fontSize:"15px"}}/></span>{product.price}
+            ${product.price}
             </span>
             {product.sellingPrice > 0 ? (
               <span className="font-semibold text-lg flex items-center text-primary">
-                  <span><FaIndianRupeeSign style={{fontSize:"15px"}}/></span>{product.sellingPrice}
+              ${product.sellingPrice}
               </span>
             ) : null}
           </div>

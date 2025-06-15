@@ -9,7 +9,6 @@ const OderSchema = new mongoose.Schema({
       title: String,
       image: String,
       price: String,
-      sellingPrice: String,
       quantity: Number,
     },
   ],

@@ -33,7 +33,9 @@ const CartWrapper = ({ cartItems }) => {
       </SheetHeader>
       <div className="mt-2 max-h-[70vh] overflow-y-auto space-y-4">
         {cartItems && cartItems.length > 0 ? (
-          cartItems.map((item, index) => <CartContent key={index} cartitem={item} />)
+          cartItems.map((item, index) => (
+            <CartContent key={index} cartitem={item} />
+          ))
         ) : (
           <h1>Cart is empty</h1>
         )}
@@ -46,11 +48,11 @@ const CartWrapper = ({ cartItems }) => {
       </div>
       <Button
         onClick={() => {
-          navigate('/shop/checkout');
+          navigate("/shop/checkout");
         }}
         className="w-full mt-5"
       >
-        Checkout 
+        Checkout
       </Button>
     </SheetContent>
   );

@@ -1,16 +1,21 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-
-const AddressCard = ({ addressInfo , handleDelete , handleEdit }) => {
+const AddressCard = ({
+  addressInfo,
+  handleDelete,
+  handleEdit,
+  setCurrentAddress,
+}) => {
   return (
-    <Card className="relative overflow-hidden  w-full">
+    <Card
+      onClick={() => {
+        setCurrentAddress ? setCurrentAddress(addressInfo) : null;
+      }}
+      className="relative overflow-hidden  w-full"
+    >
       {/* <ShineBorder shineColor={["#991F87", "#", "#FFAA43"]} /> */}
 
       <CardContent className={"grid gap-4 "}>
@@ -41,8 +46,22 @@ const AddressCard = ({ addressInfo , handleDelete , handleEdit }) => {
         </div>
       </CardContent>
       <CardFooter className={"flex justify-between"}>
-        <Button className="px-10" onClick={()=>{ handleEdit(addressInfo)}} >Edit</Button>
-        <Button className="px-10" onClick={()=>{ handleDelete(addressInfo)}} >Delete</Button>
+        <Button
+          className="px-10"
+          onClick={() => {
+            handleEdit(addressInfo);
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          className="px-10"
+          onClick={() => {
+            handleDelete(addressInfo);
+          }}
+        >
+          Delete
+        </Button>
       </CardFooter>
     </Card>
   );

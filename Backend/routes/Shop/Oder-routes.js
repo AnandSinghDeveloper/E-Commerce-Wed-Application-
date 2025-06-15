@@ -1,9 +1,9 @@
 const router = require("express").Router();
  
-const { createOder, capturePayment } = require("../../controllers/Shop/Order-Controller");
+const { createOrder, capturePayment } = require("../../controllers/Shop/Order-Controller");
 
 
-router.post('/createOder', createOder);
+router.post('/createOrder', createOrder);
 // router.post('/capturePayment', capturePayment);
 
 

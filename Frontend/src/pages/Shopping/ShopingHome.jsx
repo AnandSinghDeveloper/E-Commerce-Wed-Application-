@@ -34,7 +34,10 @@ import {
   Volleyball,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchedFilterProducts, getProductsDetails } from "@/store/Shop/shopProductSlice";
+import {
+  fetchedFilterProducts,
+  getProductsDetails,
+} from "@/store/Shop/shopProductSlice";
 import ShopProductTile from "./ShopProductTile";
 import { useNavigate } from "react-router-dom";
 import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
@@ -126,7 +129,7 @@ const ShopingHome = () => {
   const { productsList, productDetails } = useSelector(
     (state) => state.shopProduct
   );
-   const [openDetails, setOpenDetails] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
   const handleNavigate = (getcurrentItem, selection) => {
@@ -139,22 +142,21 @@ const ShopingHome = () => {
     navigate("/shop/listing");
   };
 
-   const handleGetProductDetails = (id) => {
-      dispatch(getProductsDetails(id));
+  const handleGetProductDetails = (id) => {
+    dispatch(getProductsDetails(id));
+  };
+  const handleAddtoCart = (getcurrentID) => {
+    //  console.log(getcurrentID);
 
-    };
-    const handleAddtoCart = (getcurrentID) => {
-      //  console.log(getcurrentID);
-      
-        dispatch(AddToCart({userId:user.id,productId:getcurrentID,quantity:1})).then((data)=>{
-          if(data.payload.success){
-            toast.success(data.payload.message);
-            dispatch(fetchCartitems({userId:user.id}));
-          }
-          
-        })
-       
-        }
+    dispatch(
+      AddToCart({ userId: user.id, productId: getcurrentID, quantity: 1 })
+    ).then((data) => {
+      if (data.payload.success) {
+        toast.success(data.payload.message);
+        dispatch(fetchCartitems({ userId: user.id }));
+      }
+    });
+  };
 
   const slides = [
     bainer1,
@@ -184,14 +186,14 @@ const ShopingHome = () => {
       })
     );
   }, [dispatch]);
-  
+
   useEffect(() => {
-      if (productDetails !== null) {
-        // console.log(productDetails);
-  
-        setOpenDetails(true);
-      }
-    }, [productDetails]);
+    if (productDetails !== null) {
+      // console.log(productDetails);
+
+      setOpenDetails(true);
+    }
+  }, [productDetails]);
 
   const newProductslist = productsList.slice(0, 4);
 
@@ -300,8 +302,15 @@ const ShopingHome = () => {
         </div>
         <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
           {newProductslist && newProductslist.length > 0
-            ? newProductslist.map((product ,index) => {
-                return <ShopProductTile handleAddtoCart={handleAddtoCart} handleGetProductDetails={handleGetProductDetails} product={product} key={index} />;
+            ? newProductslist.map((product, index) => {
+                return (
+                  <ShopProductTile
+                    handleAddtoCart={handleAddtoCart}
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={product}
+                    key={index}
+                  />
+                );
               })
             : null}
         </div>

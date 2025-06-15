@@ -1,12 +1,11 @@
 // const { payment } = require("paypal-rest-sdk");
-const Oder = require("../../models/Oder");
+const  Oder = require("../../models/Oder");
 const Paypal = require("../../Helpers/Paypal");
 
-const createOder = async (req, res) => {
+const createOrder = async (req, res) => {
   try {
     const {
       userId,
-      addressId,
       paymentMethod,
       paymentStatus,
       paymentId,
@@ -26,8 +25,8 @@ const createOder = async (req, res) => {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "http://localhost:3000/success",
-        cancel_url: "http://localhost:3000/cancel",
+        return_url: "http://localhost:5173/shop/Paypal-return",
+        cancel_url: "http://localhost:5173/shop/Paypal-cancal",
       },
       transactions: [
         {
@@ -60,7 +59,6 @@ const createOder = async (req, res) => {
       } else {
         const newlyCreatedoder = new Oder({
           userId,
-          addressId,
           paymentMethod,
           paymentStatus,
           paymentId,
@@ -73,16 +71,20 @@ const createOder = async (req, res) => {
           totalAmount,
         });
 
+        await newlyCreatedoder.save();
+
         const approvalUrl = payment.links.find(
           (link) => link.rel === "approval_url"
-        );
-        res.redirect(approvalUrl.href);
+        ).href;
+        
 
-        await newlyCreatedoder.save();
+        
+
         res.status(201).json({
           success: true,
           message: "Oder created successfully",
-          data: newlyCreatedoder,
+          approvalUrl: approvalUrl,
+          orderId: newlyCreatedoder._id,
         });
       }
     });
@@ -108,6 +110,6 @@ const capturePayment = async (req, res) => {
 };
 
 module.exports = {
-  createOder,
+  createOrder,
   capturePayment,
 };
