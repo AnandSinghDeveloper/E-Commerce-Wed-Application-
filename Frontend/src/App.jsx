@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { Authcheck } from "./store/auth-slice/auth-slice";
 import { Skeleton } from "./components/ui/skeleton";
 import PaypalReturn from "./pages/Shopping/PaypalReturn";
+import Paymentsucess from "./pages/Shopping/Paymentsucess";
 
 function App() {
   const { user, isauthenticated ,isloading } = useSelector((state) => state.auth);
@@ -77,6 +78,7 @@ function App() {
           <Route path="account" element={<ShopingAccount />} />
           <Route path="checkout" element={<ShopingCheckout />} />
           <Route path="Paypal-return" element={<PaypalReturn />} />
+          <Route path="paymentsuccess" element={<Paymentsucess />} />
         </Route>
         <Route path="*" element={<Index />} />
       </Routes>

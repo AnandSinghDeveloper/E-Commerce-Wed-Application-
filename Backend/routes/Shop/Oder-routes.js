@@ -4,7 +4,7 @@ const { createOrder, capturePayment } = require("../../controllers/Shop/Order-Co
 
 
 router.post('/createOrder', createOrder);
-// router.post('/capturePayment', capturePayment);
+router.post('/capture', capturePayment);
 
 
 module.exports = router;

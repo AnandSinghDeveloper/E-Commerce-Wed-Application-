@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewOrder } from "@/store/Shop/OderSlice";
+import Loader from "../loading/Loader";
 
 
 const ShopingCheckout = () => {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
-  const {approvalUrl} = useSelector((state)=>state.order);
+  const {approvalUrl , isloading} = useSelector((state)=>state.order);
   const [currentAddress, setCurrentAddress] = useState(null);
   const [ispaymentstarted, setIsPaymentStarted] = useState(false);
 
@@ -34,6 +35,7 @@ const ShopingCheckout = () => {
   const inisatePaypalPayment = () => {
     const orderdata = {
       userId: user?.id,
+       cartId:cartItems?._id,
       cartitems: cartItems.items.map((item) => ({
         productId: item?.productId,
         title: item?.title,
@@ -60,7 +62,10 @@ const ShopingCheckout = () => {
     };
 
     console.log(orderdata);
-    dispatch(createNewOrder(orderdata)).then((data) => {
+    if(isloading){
+       
+    }else{
+      dispatch(createNewOrder(orderdata)).then((data) => {
       console.log(data);
       if (data?.payload?.success) {
         setIsPaymentStarted(true);
@@ -68,6 +73,7 @@ const ShopingCheckout = () => {
         setIsPaymentStarted(false)
       }
     });
+    }
   };
 
   if(approvalUrl){

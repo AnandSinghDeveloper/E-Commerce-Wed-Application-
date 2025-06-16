@@ -1,11 +1,15 @@
 // const { payment } = require("paypal-rest-sdk");
-const  Oder = require("../../models/Oder");
+const Oder = require("../../models/Oder");
 const Paypal = require("../../Helpers/Paypal");
+const Cards = require("../../models/cart");
+
+
 
 const createOrder = async (req, res) => {
   try {
     const {
       userId,
+      cartId,
       paymentMethod,
       paymentStatus,
       paymentId,
@@ -59,6 +63,7 @@ const createOrder = async (req, res) => {
       } else {
         const newlyCreatedoder = new Oder({
           userId,
+          cartId,
           paymentMethod,
           paymentStatus,
           paymentId,
@@ -76,9 +81,6 @@ const createOrder = async (req, res) => {
         const approvalUrl = payment.links.find(
           (link) => link.rel === "approval_url"
         ).href;
-        
-
-        
 
         res.status(201).json({
           success: true,
@@ -97,9 +99,44 @@ const createOrder = async (req, res) => {
   }
 };
 
-
 const capturePayment = async (req, res) => {
   try {
+    const { payerID, paymentId, orderId } = req.body;
+
+    if (!payerID || !paymentId || !orderId) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide all the required fields",
+      });
+    }
+    console.log(orderId);
+    
+
+    let order = await Oder.findById(orderId);
+    console.log(order);
+    
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    order.paymentId = paymentId;
+    order.payerID = payerID;
+    order.paymentStatus = "paid";
+    order.orderStatus = "confirmed";
+
+    const getcartID = order.cartId;
+    await Cards.findByIdAndDelete(getcartID);
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Payment captured successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
