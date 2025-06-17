@@ -3,8 +3,6 @@ const Oder = require("../../models/Oder");
 const Paypal = require("../../Helpers/Paypal");
 const Cards = require("../../models/cart");
 
-
-
 const createOrder = async (req, res) => {
   try {
     const {
@@ -110,11 +108,9 @@ const capturePayment = async (req, res) => {
       });
     }
     console.log(orderId);
-    
 
     let order = await Oder.findById(orderId);
     console.log(order);
-    
 
     if (!order) {
       return res.status(404).json({
@@ -146,7 +142,66 @@ const capturePayment = async (req, res) => {
   }
 };
 
+const getoderDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+     const oder = await Oder.findById(id);
+     if (!oder) {
+       return res.status(404).json({
+         success: false,
+         message: "Oder not found",
+       });
+     }
+
+     res.status(200).json({
+       success: true,
+       message: "Oder fetched successfully",
+       data: oder,
+     });
+      
+    
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+const getAllOderByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+     
+    const oders = await Oder.find({ userId });
+    if (!oders) {
+      return res.status(404).json({
+        success: false,
+        message: "Oder not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Oder fetched successfully",
+      data: oders,
+    });
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
 module.exports = {
   createOrder,
   capturePayment,
+  getoderDetails,
+  getAllOderByUser
 };

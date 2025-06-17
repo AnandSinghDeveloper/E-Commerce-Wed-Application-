@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewOrder } from "@/store/Shop/OderSlice";
 import Loader from "../loading/Loader";
+import { toast } from "sonner";
 
 
 const ShopingCheckout = () => {
@@ -33,6 +34,17 @@ const ShopingCheckout = () => {
       : 0;
 
   const inisatePaypalPayment = () => {
+
+    if(cartItems?.items?.length === 0){
+  toast.error(" Your Cart is empty");
+  return;
+}
+
+if(!currentAddress){
+  toast.error("Please select one address to checkout");
+  return;
+}
+
     const orderdata = {
       userId: user?.id,
        cartId:cartItems?._id,

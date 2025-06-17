@@ -1,6 +1,6 @@
 import { CircleUserRound, HomeIcon, LogOut, ShoppingCart } from "lucide-react";
 import React, { useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SheetTrigger, Sheet, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";

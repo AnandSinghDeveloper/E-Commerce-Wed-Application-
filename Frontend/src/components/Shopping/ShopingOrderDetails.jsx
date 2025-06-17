@@ -1,12 +1,20 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
-
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOderByUser } from "@/store/Shop/OderSlice";
 
 const ShopingOrderDetails = () => {
+const dispatch = useDispatch();
+const {user} = useSelector((state) => state.auth);
+const {orderList} = useSelector((state) => state.order);
+useEffect(() => {
+  dispatch(getAllOderByUser(user?.id))
+}, [dispatch]);
+
   return (
    <DialogContent className={"sm:max-w-[600px]"}>
       <div className="grid gap-6">
