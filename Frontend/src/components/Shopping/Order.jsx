@@ -14,15 +14,22 @@ import { Dialog } from "../ui/dialog";
 import OderDetails from "./ShopingOrderDetails";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOderByUser } from "@/store/Shop/OderSlice";
+import { getAllOderByUser,getoderDetails } from "@/store/Shop/OderSlice";
 import { Badge } from "../ui/badge";
 
 const Order = () => {
   const [openOderDetails, setOpenOderDetails] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { orderList } = useSelector((state) => state.order);
+  const { orderList,orderDetails } = useSelector((state) => state.order);
+  const  handleOderDetails = (getOrderId)=>{
+  //  console.log(getOrderId);
 
+    dispatch(getoderDetails(getOrderId));
+    // console.log(orderDetails);
+    setOpenOderDetails(true)
+    
+  }
 
   useEffect(() => {
     dispatch(getAllOderByUser(user?.id));
@@ -59,11 +66,12 @@ const Order = () => {
                   open={openOderDetails}
                   onOpenChange={() => {
                     setOpenOderDetails(!openOderDetails);
+                   
                   }}
                 >
                   <Button
                     onClick={() => {
-                      setOpenOderDetails(!openOderDetails);
+                     handleOderDetails(orderitem?._id);
                     }}
                   >
                     View Details
