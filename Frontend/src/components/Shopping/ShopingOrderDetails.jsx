@@ -3,12 +3,15 @@ import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { useDispatch, useSelector } from "react-redux";
+import { Badge } from "../ui/badge";
 
 
 const ShopingOrderDetails = () => {
  
   const { user } = useSelector((state) => state.auth);
   const { orderDetails } = useSelector((state) => state.order);
+  console.log(orderDetails);
+  
 
  
 
@@ -26,11 +29,19 @@ const ShopingOrderDetails = () => {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Status</p>
-            <Label>{orderDetails.orderStatus}</Label>
+            <Label><Badge className={`py-1 px-3 rounded-full ${orderDetails?.orderStatus === "pending" ? "bg-yellow-500" : orderDetails?.orderStatus === "confirmed" ? "bg-green-500" : "bg-red-500"}`}>{orderDetails?.orderStatus}</Badge></Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Amunot</p>
-            <Label>${orderDetails.totalAmount}</Label>
+            <Label>${orderDetails?.totalAmount}</Label>
+          </div>
+          <div className="flex mt-2 items-center justify-between">
+            <p className=" font-medium">Payment Status</p>
+            <Label>{orderDetails?.paymentStatus}</Label>
+          </div>
+          <div className="flex mt-2 items-center justify-between">
+            <p className=" font-medium">Payment method</p>
+            <Label>{orderDetails?.paymentMethod}</Label>
           </div>
         </div>
         <Separator />
@@ -41,7 +52,8 @@ const ShopingOrderDetails = () => {
               {orderDetails && orderDetails.cartitems.length > 0
                 ? orderDetails.cartitems.map((items, idx) => (
                     <li className="flex items-center justify-between">
-                      <span>{items?.title}</span>
+                      <span>  {items?.title}</span>
+                       <span> Quantity : {items?.quantity}</span>
                       <span>Rs. {items?.price}</span>
                     </li>
                   ))

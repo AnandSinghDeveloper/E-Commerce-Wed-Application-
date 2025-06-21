@@ -53,10 +53,10 @@ const Order = () => {
               <TableHead className={"sr-only"}>Details</TableHead>
             </TableRow>
           </TableHeader>
-<TableBody>
+        <TableBody>
           {
              orderList && orderList.length > 0 ? orderList.map((orderitem, index) =>( 
-            <TableRow>
+            <TableRow key={index}>
               <TableCell>{orderitem?._id}</TableCell>
               <TableCell>{orderitem?.orderDate.split("T")[0]}</TableCell>
               <TableCell> <Badge className={`py-1 px-3 rounded-full ${orderitem?.orderStatus === "pending" ? "bg-yellow-500" : orderitem?.orderStatus === "confirmed" ? "bg-green-500" : "bg-red-500"}`}>{orderitem?.orderStatus}</Badge></TableCell>

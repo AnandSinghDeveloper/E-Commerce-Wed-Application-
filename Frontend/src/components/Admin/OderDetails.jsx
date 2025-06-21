@@ -4,18 +4,24 @@ import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import CommonFrom from "../Common/CommonFrom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Badge } from "../ui/badge";
 
 const initialFormData = {
   orderStatus: "",
-}
+};
+
 const OderDetails = () => {
- 
- const [fromdata, setFromdata] = useState(initialFormData);
+  const { orderDetails } = useSelector((state) => state.adminOrder);
+
+
+  
+
+  const [fromdata, setFromdata] = useState(initialFormData);
 
   const handleupdateOrderStatus = (e) => {
     e.preventDefault();
-
-  }
+  };
 
   return (
     <DialogContent className={"sm:max-w-[600px]"}>
@@ -23,19 +29,31 @@ const OderDetails = () => {
         <div className="grid gap-2 ">
           <div className="flex mt-6 items-center justify-between">
             <p className="text-lg font-bold">Order ID</p>
-            <Label>1516465116</Label>
+            <Label>{orderDetails?._id}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Date</p>
-            <Label>2022-07-01</Label>
+            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Status</p>
-            <Label>Pending</Label>
+            <Label>
+              <Badge
+                className={`py-1 px-3 rounded-full ${
+                  orderDetails?.orderStatus === "pending"
+                    ? "bg-yellow-500"
+                    : orderDetails?.orderStatus === "confirmed"
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }`}
+              >
+                {orderDetails?.orderStatus}
+              </Badge>
+            </Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Amunot</p>
-            <Label>$500</Label>
+            <Label>${orderDetails?.totalAmount}</Label>
           </div>
         </div>
         <Separator />
@@ -43,10 +61,15 @@ const OderDetails = () => {
           <div className="grid gap-2">
             <div className="text-lg font-bold">Order Details</div>
             <ul className="grid gap-3">
-              <li className="flex items-center justify-between">
-                <span>Football</span>
-                <span>Rs. 1000</span>
-              </li>
+               {orderDetails && orderDetails.cartitems.length > 0
+                ? orderDetails.cartitems.map((items, idx) => (
+                    <li className="flex items-center justify-between">
+                      <span>  {items?.title}</span>
+                       <span> Quantity : {items?.quantity}</span>
+                      <span>Rs. {items?.price}</span>
+                    </li>
+                  ))
+                : null}
             </ul>
           </div>
         </div>
@@ -56,11 +79,11 @@ const OderDetails = () => {
             <div className="font-bold "> Shipping Details</div>
             <div className=" grid gap-0.5 text-muted-foreground">
               <span>Gautam</span>
-              <span>Address</span>
-              <span>City</span>
-              <span>PinCode</span>
-              <span>Phone</span>
-              <span>Notes</span>
+              <span>{orderDetails?.AddressInfo?.address}</span>
+              <span>{orderDetails?.AddressInfo?.city}</span>
+              <span>{orderDetails?.AddressInfo?.phone}</span>
+              <span>{orderDetails?.AddressInfo?.pincode}</span>
+              <span>{orderDetails?.AddressInfo?.notes}</span>
             </div>
           </div>
           <div>
@@ -76,7 +99,6 @@ const OderDetails = () => {
                     { label: "Rejected", id: "Rejected" },
                     { label: "In Process", id: "In Process" },
                     { label: "In Shiping", id: "In Shiping" },
-                    
                   ],
                 },
               ]}
@@ -85,10 +107,7 @@ const OderDetails = () => {
               onSubmit={handleupdateOrderStatus}
               buttonText={"Update order status"}
             />
-
-
           </div>
-          
         </div>
       </div>
     </DialogContent>

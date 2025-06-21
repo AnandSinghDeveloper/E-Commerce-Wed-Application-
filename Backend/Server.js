@@ -9,6 +9,7 @@ const shopRouter = require("./routes/Shop/shop-routes");
 const cartRouter = require("./routes/Shop/cart-routes");
 const addressRouter = require("./routes/Shop/Address-routes");
 const OderRouter = require("./routes/Shop/Oder-routes");
+const AdOrderRouter = require("./routes/Admin/OrderRoutes");
 
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -33,6 +34,7 @@ App.use(cookieParser());
 App.use(express.static("public"));
 App.use("/api/auth", authRouter);
 App.use("/api/admin", adminRouter);
+App.use("/api/AdOder", AdOrderRouter);
 App.use("/api/shop", shopRouter);
 App.use("/api/cart", cartRouter);
 App.use("/api/address", addressRouter);
