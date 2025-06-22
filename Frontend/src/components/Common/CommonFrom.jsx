@@ -119,7 +119,7 @@ const CommonFrom = ({
       </div>
       <Button
         type="submit"
-        className="mt-7 w-[90%] ml-5 "
+        className=" w-[90%] ml-5 "
         style={{ backgroundColor: color }}
       >
         {buttonText ? buttonText : "Submit"}

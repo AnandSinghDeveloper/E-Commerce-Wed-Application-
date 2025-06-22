@@ -10,7 +10,7 @@ const ProductTile = ({
   CurrentEditedID,
   HandleDelate,
 }) => {
-  console.log(product);
+ 
 
   return (
     <Card className={" shadow-sm  p-0  cart"}>

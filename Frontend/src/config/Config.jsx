@@ -136,6 +136,12 @@ export const userMenuItems = [
     label: "Home",
     path: "/Shop/home",
   },
+   {
+    id: "Products",
+    label: "Products",
+    path: "/Shop/listing",
+   
+  },
   {
     id: "Men",
     label: "Men",

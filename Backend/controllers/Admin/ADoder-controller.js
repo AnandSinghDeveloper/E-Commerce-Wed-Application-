@@ -49,5 +49,33 @@ const getAllOder = async (req, res) => {
   }
 };
 
+const updateOderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { orderStatus } = req.body;
 
-module.exports = { getoderDetails, getAllOder };
+    const oder = await Oder.findById(id);
+    if (!oder) {
+      return res.status(404).json({
+        success: false,
+        message: "Oder not found",
+      });
+    }  
+
+    await Oder.findByIdAndUpdate(id, { orderStatus: orderStatus }, { new: true });
+    res.status(200).json({
+      success: true,
+      message: "Oder status updated successfully",
+    });
+    
+
+}catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+module.exports = { getoderDetails, getAllOder,updateOderStatus };

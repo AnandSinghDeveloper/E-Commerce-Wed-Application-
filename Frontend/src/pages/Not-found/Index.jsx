@@ -51,7 +51,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 100%;
     background: white;
-    background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #fb6d26 100%);
+    background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #c173c6 100%);
     z-index: -10;
   }`;
 

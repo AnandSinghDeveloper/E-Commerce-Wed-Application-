@@ -88,7 +88,7 @@ const ADproducts = () => {
     dispatch(fetchedProducts());
   }, [dispatch]);
 
-  console.log(productsList);
+
 
   return (
     <Fragment>

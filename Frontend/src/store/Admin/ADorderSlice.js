@@ -31,6 +31,17 @@ export const getoderDetails = createAsyncThunk(
   }
 );
 
+export const updateOderStatus = createAsyncThunk(
+  "order/updateOderStatus",
+  async ({ id, orderStatus }) => {
+    const response = await axios.put(
+      `http://localhost:5000/api/AdOder/update/${id}`,
+      {orderStatus}
+    );
+    return response?.data;
+  }
+);
+
 const AdorderSlice = createSlice({
   name: "order",
   initialState,
@@ -42,7 +53,7 @@ const AdorderSlice = createSlice({
       })
       .addCase(getAllOder.fulfilled, (state, action) => {
         state.isloading = false;
-        console.log(action.payload);
+       
         
         state.orderList = action.payload.data;
       })
@@ -60,6 +71,10 @@ const AdorderSlice = createSlice({
       .addCase(getoderDetails.rejected, (state, action) => {
         state.isloading = false;
         state.orderDetails = [];
+      }) 
+      .addCase(updateOderStatus.rejected, (state, action) => {
+        console.log(action.payload);
+        
       });
   },
 });

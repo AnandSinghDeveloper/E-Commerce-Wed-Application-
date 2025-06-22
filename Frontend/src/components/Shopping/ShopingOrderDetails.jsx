@@ -5,15 +5,10 @@ import { Separator } from "../ui/separator";
 import { useDispatch, useSelector } from "react-redux";
 import { Badge } from "../ui/badge";
 
-
 const ShopingOrderDetails = () => {
- 
   const { user } = useSelector((state) => state.auth);
   const { orderDetails } = useSelector((state) => state.order);
   console.log(orderDetails);
-  
-
- 
 
   return (
     <DialogContent className={"sm:max-w-[600px]"}>
@@ -29,7 +24,23 @@ const ShopingOrderDetails = () => {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Status</p>
-            <Label><Badge className={`py-1 px-3 rounded-full ${orderDetails?.orderStatus === "pending" ? "bg-yellow-500" : orderDetails?.orderStatus === "confirmed" ? "bg-green-500" : "bg-red-500"}`}>{orderDetails?.orderStatus}</Badge></Label>
+            <Label>
+              <Badge
+                className={`py-1 px-3 rounded-full ${
+                  orderDetails?.orderStatus === "pending"
+                    ? "bg-yellow-500"
+                    : orderDetails?.orderStatus === "confirmed"
+                    ? "bg-green-500"
+                    : orderDetails?.orderStatus === "Rejected"
+                    ? "bg-red-500"
+                    : orderDetails?.orderStatus === "Delivered"
+                    ? "bg-[#5752e2]"
+                    : "bg-violet-500"
+                }`}
+              >
+                {orderDetails?.orderStatus}
+              </Badge>
+            </Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className=" font-medium">Order Amunot</p>
@@ -52,8 +63,8 @@ const ShopingOrderDetails = () => {
               {orderDetails && orderDetails.cartitems.length > 0
                 ? orderDetails.cartitems.map((items, idx) => (
                     <li className="flex items-center justify-between">
-                      <span>  {items?.title}</span>
-                       <span> Quantity : {items?.quantity}</span>
+                      <span> {items?.title}</span>
+                      <span> Quantity : {items?.quantity}</span>
                       <span>Rs. {items?.price}</span>
                     </li>
                   ))

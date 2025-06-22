@@ -29,7 +29,7 @@ const MenuItems = () => {
      const handleNavigate = (getcurrentItem) => {
       sessionStorage.removeItem("fliter");
       const currentfilter = 
-        getcurrentItem.id !== 'Home' ? { category: [getcurrentItem.id] } : null;
+        getcurrentItem.id !== 'Home' && getcurrentItem.id !== 'Products' ? { category: [getcurrentItem.id] } : null;
   
       sessionStorage.setItem("fliter", JSON.stringify(currentfilter));
       navigate(getcurrentItem.path);

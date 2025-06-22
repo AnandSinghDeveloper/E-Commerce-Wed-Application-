@@ -107,7 +107,6 @@ const capturePayment = async (req, res) => {
         message: "Please provide all the required fields",
       });
     }
-    console.log(orderId);
 
     let order = await Oder.findById(orderId);
     console.log(order);
@@ -146,22 +145,19 @@ const getoderDetails = async (req, res) => {
   try {
     const { id } = req.params;
 
-     const oder = await Oder.findById(id);
-     if (!oder) {
-       return res.status(404).json({
-         success: false,
-         message: "Oder not found",
-       });
-     }
+    const oder = await Oder.findById(id);
+    if (!oder) {
+      return res.status(404).json({
+        success: false,
+        message: "Oder not found",
+      });
+    }
 
-     res.status(200).json({
-       success: true,
-       message: "Oder fetched successfully",
-       data: oder,
-     });
-      
-    
-
+    res.status(200).json({
+      success: true,
+      message: "Oder fetched successfully",
+      data: oder,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -174,7 +170,7 @@ const getoderDetails = async (req, res) => {
 const getAllOderByUser = async (req, res) => {
   try {
     const { userId } = req.params;
-     
+
     const oders = await Oder.find({ userId });
     if (!oders) {
       return res.status(404).json({
@@ -187,8 +183,6 @@ const getAllOderByUser = async (req, res) => {
       message: "Oder fetched successfully",
       data: oders,
     });
-
-
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -198,10 +192,9 @@ const getAllOderByUser = async (req, res) => {
   }
 };
 
-
 module.exports = {
   createOrder,
   capturePayment,
   getoderDetails,
-  getAllOderByUser
+  getAllOderByUser,
 };
