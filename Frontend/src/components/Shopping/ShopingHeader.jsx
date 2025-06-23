@@ -1,6 +1,6 @@
 import { CircleUserRound, HomeIcon, LogOut, ShoppingCart } from "lucide-react";
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { SheetTrigger, Sheet, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
@@ -22,26 +22,38 @@ import { logout } from "@/store/auth-slice/auth-slice";
 import CartWrapper from "./CartWrapper";
 import { fetchCartitems } from "@/store/Shop/shopCartSlice";
 import { Label } from "../ui/label";
+import { useLocation } from "react-router-dom";
 
 const MenuItems = () => {
-     const navigate = useNavigate ();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-     const handleNavigate = (getcurrentItem) => {
-      sessionStorage.removeItem("fliter");
-      const currentfilter = 
-        getcurrentItem.id !== 'Home' && getcurrentItem.id !== 'Products' ? { category: [getcurrentItem.id] } : null;
-  
-      sessionStorage.setItem("fliter", JSON.stringify(currentfilter));
-      navigate(getcurrentItem.path);
+  const handleNavigate = (getcurrentItem) => {
+    sessionStorage.removeItem("fliter");
+    const currentfilter =
+      getcurrentItem.id !== "Home" && getcurrentItem.id !== "Products"
+        ? { category: [getcurrentItem.id] }
+        : null;
 
-    };
-  
+    sessionStorage.setItem("fliter", JSON.stringify(currentfilter));
+
+    location.pathname.includes("/listing") && currentfilter !== null
+      ? setSearchParams(new URLSearchParams(`?category=${getcurrentItem.id}`))
+      : navigate(getcurrentItem.path);
+  };
 
   return (
     <nav className="flex flex-col mb-3  lg:mb-0 lg:flex-row lg:items-center gap-6  ">
       {userMenuItems.map((item) => {
         return (
-          <Label onClick={() =>{ handleNavigate(item)}} key={item.id} className=" nav-item cursor-pointer font-medium text-sm  " >
+          <Label
+            onClick={() => {
+              handleNavigate(item);
+            }}
+            key={item.id}
+            className=" nav-item cursor-pointer font-medium text-sm  "
+          >
             {item.label}
           </Label>
         );
@@ -51,24 +63,19 @@ const MenuItems = () => {
 };
 const HeaderRightContent = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const {cartItems} = useSelector((state) => state.shopCart);
-  const [openCartSheet, setOpenCartSheet] = useState(false) 
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const [openCartSheet, setOpenCartSheet] = useState(false);
 
- 
   // console.log(cartItems.items);
-  
-  
 
   const handleLogOut = () => {
     dispatch(logout());
-  }
+  };
 
   useEffect(() => {
-    dispatch(fetchCartitems({userId:user.id}));
-    
-    
-  },[dispatch])
+    dispatch(fetchCartitems({ userId: user.id }));
+  }, [dispatch]);
 
   const { user } = useSelector((state) => state.auth);
   // console.log(user);
@@ -76,11 +83,15 @@ const HeaderRightContent = () => {
   return (
     <div className=" flex lg:items-center lg:flex-row   gap-4 ">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-      <Button onClick={() => setOpenCartSheet(true)} variant={"outline"} size={"icon"}>
-        <ShoppingCart className="w-6 h-6" />
-        <span className="sr-only"> User Cart</span>
-      </Button>
-      <CartWrapper cartItems={cartItems.items} />
+        <Button
+          onClick={() => setOpenCartSheet(true)}
+          variant={"outline"}
+          size={"icon"}
+        >
+          <ShoppingCart className="w-6 h-6" />
+          <span className="sr-only"> User Cart</span>
+        </Button>
+        <CartWrapper cartItems={cartItems.items} />
       </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger aschild>
@@ -124,11 +135,8 @@ const ShopingHeader = () => {
         <Sheet open={menuItemOpen} onOpenChange={setMenuItemOpen}>
           <SheetTrigger aschild>
             <Button variant={"outline"} size={"icon"} className="lg:hidden">
-            
-         
-           
               <Menu className="w-6 h-6" />
-              
+
               <span className="sr-only">Open menu</span>
             </Button>
           </SheetTrigger>
@@ -138,18 +146,16 @@ const ShopingHeader = () => {
               "w-60 max-w-xs px-10 py-10  rounded-br-2xl rounded-tr-xl"
             }
           >
-            
             <MenuItems />
-            <HeaderRightContent  />
+            <HeaderRightContent />
           </SheetContent>
         </Sheet>
         <div className=" hidden lg:block">
           <MenuItems />
-         
         </div>
         {isauthenticated ? (
           <div className="hidden lg:block">
-            <HeaderRightContent /> 
+            <HeaderRightContent />
           </div>
         ) : null}
       </div>

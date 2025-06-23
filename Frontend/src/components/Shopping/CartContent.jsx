@@ -11,6 +11,8 @@ import { toast } from "sonner";
 const CartContent = ({ cartitem }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+ const {cartItems} = useSelector((state) => state.shopCart);
+ const {productsList} = useSelector((state) => state.shopProduct);
 
   const handleDeleteCartItem = (getCartitem) => {
     dispatch(
@@ -23,6 +25,24 @@ const CartContent = ({ cartitem }) => {
   };
 
   const handleUpdateCartItem = (getCartitem, type) => {
+    
+  //   if(type == " increase" ){
+  //  let getCartItem = cartItems.items || [];
+  //   const findCurrentProduct = getCartItem.find(
+  //     (item) => item.productId === getCartitem.productId
+  //   );
+  //   const getcurrentStock = productsList.find((item) => item._id === getCartitem.productId).totalStock
+  //   if (findCurrentProduct) {
+  //     const currentQuantity = findCurrentProduct.quantity;
+  //     if (currentQuantity + 1 > getcurrentStock) {
+  //       toast.error(`You can't add more than ${getcurrentStock} items`);
+  //       return;
+  //     }
+  //   }
+  //   }
+ 
+     
+
     dispatch(
       UpdateCartitemQuantity({
         userId: user?.id,

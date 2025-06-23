@@ -14,7 +14,18 @@ const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) =
             alt={product.title}
             className="w-full h-[300px] object-cover rounded-lg"
           />
-          {product.sellingPrice > 0 ? (
+          {
+          
+           product?.totalStock <= 0 ? (
+            <Badge className={"absolute left-2 top-2 bg-red-400 hover:bg-red-600"}>
+              Out of Stock
+            </Badge>): product.totalStock <= 5 ? (
+              <Badge className={"absolute left-2 top-2 bg-red-400 hover:bg-red-600"}>
+                {` only  ${product.totalStock} item left`}
+              </Badge>
+            ): 
+
+          product.sellingPrice > 0 ? (
             <Badge
               className={"absolute left-2 top-2 bg-red-400 hover:bg-red-600"}
             >
@@ -49,9 +60,17 @@ const ShopProductTile = ({ product, handleGetProductDetails,handleAddtoCart }) =
         </CardContent>
     
       </div>
-      <CardFooter className={"w-full"}>
-          <Button onClick={() => handleAddtoCart(product?._id)} className={"w-full  mb-5"}>Add to Cart</Button>
+
+      {
+        product?.totalStock <= 0 ? (
+           <CardFooter className={"w-full opacity-60 cursor-not-allowed"}>
+          <Button onClick={() => handleAddtoCart(product?._id)} className={"w-full  mb-5 cursor-not-allowed"}>Out of Stock</Button>
         </CardFooter>
+        ): <CardFooter className={"w-full"}>
+          <Button onClick={() => handleAddtoCart(product?._id , product?.totalStock)} className={"w-full  mb-5"}>Add to Cart</Button>
+        </CardFooter>
+      }
+      
     </Card>
   );
 };

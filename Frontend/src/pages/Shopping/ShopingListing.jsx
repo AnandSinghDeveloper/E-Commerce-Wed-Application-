@@ -27,19 +27,19 @@ const ShopingListing = () => {
   const dispatch = useDispatch();
   const { productsList, productDetails } = useSelector(
     (state) => state.shopProduct
-  )
-  
+  );
+
   const [fliter, setFliter] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetails, setOpenDetails] = useState(false);
-  const {user}=useSelector((state) => state.auth);
-//  console.log(user.id);
- 
-  
+  const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.shopCart);
+  console.log(cartItems);
+
+  const cetegorySearch = searchParams.get("category");
 
   const handleSort = (value) => {
-    // console.log(value);
     setSort(value);
   };
 
@@ -83,18 +83,28 @@ const ShopingListing = () => {
     dispatch(getProductsDetails(id));
   };
 
-  const handleAddtoCart = (getcurrentID) => {
-//  console.log(getcurrentID);
-
-  dispatch(AddToCart({userId:user.id,productId:getcurrentID,quantity:1})).then((data)=>{
-    if(data.payload.success){
-      toast.success(data.payload.message);
-      dispatch(fetchCartitems({userId:user.id}));
+  const handleAddtoCart = (getcurrentID, getcurrentStock) => {
+    let getCartItem = cartItems.items || [];
+    const findCurrentProduct = getCartItem.find(
+      (item) => item.productId === getcurrentID
+    );
+    if (findCurrentProduct) {
+      const currentQuantity = findCurrentProduct.quantity;
+      if (currentQuantity + 1 > getcurrentStock) {
+        toast.error(`You can't add more than ${getcurrentStock} items`);
+        return;
+      }
     }
-    
-  })
- 
-  }
+
+    dispatch(
+      AddToCart({ userId: user.id, productId: getcurrentID, quantity: 1 })
+    ).then((data) => {
+      if (data.payload.success) {
+        toast.success(data.payload.message);
+        dispatch(fetchCartitems({ userId: user.id }));
+      }
+    });
+  };
 
   useEffect(() => {
     if (fliter && Object.keys(fliter).length > 0) {
@@ -106,7 +116,7 @@ const ShopingListing = () => {
   useEffect(() => {
     setSort("Price : Low to High");
     setFliter(JSON.parse(sessionStorage.getItem("fliter")));
-  }, []);
+  }, [cetegorySearch]);
 
   useEffect(() => {
     if (fliter !== null && sort !== null)
@@ -117,16 +127,9 @@ const ShopingListing = () => {
 
   useEffect(() => {
     if (productDetails !== null) {
-      // console.log(productDetails);
-
       setOpenDetails(true);
     }
   }, [productDetails]);
-
-  // console.log(cartItems);
-  
-
-  // console.log(fliter, searchParams);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] mt-15 gap-6 p-4 md:p-6 w-full ">
