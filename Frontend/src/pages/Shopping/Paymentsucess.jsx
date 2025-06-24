@@ -42,7 +42,11 @@ function Paymentsucess() {
               </p>
             </div>
             <div className="actions">
-              <button type="button" onClick={() => navigate("/shop/account")} className="history">
+              <button
+                type="button"
+                onClick={() => navigate("/shop/account")}
+                className="history"
+              >
                 View Order
               </button>
             </div>

@@ -11,8 +11,9 @@ import { toast } from "sonner";
 const CartContent = ({ cartitem }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
- const {cartItems} = useSelector((state) => state.shopCart);
- const {productsList} = useSelector((state) => state.shopProduct);
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const { productsList } = useSelector((state) => state.shopProduct);
+  //  console.log(productsList);
 
   const handleDeleteCartItem = (getCartitem) => {
     dispatch(
@@ -25,23 +26,30 @@ const CartContent = ({ cartitem }) => {
   };
 
   const handleUpdateCartItem = (getCartitem, type) => {
-    
-  //   if(type == " increase" ){
-  //  let getCartItem = cartItems.items || [];
-  //   const findCurrentProduct = getCartItem.find(
-  //     (item) => item.productId === getCartitem.productId
-  //   );
-  //   const getcurrentStock = productsList.find((item) => item._id === getCartitem.productId).totalStock
-  //   if (findCurrentProduct) {
-  //     const currentQuantity = findCurrentProduct.quantity;
-  //     if (currentQuantity + 1 > getcurrentStock) {
-  //       toast.error(`You can't add more than ${getcurrentStock} items`);
-  //       return;
-  //     }
-  //   }
-  //   }
- 
-     
+    let getCartItem = cartItems.items || [];
+
+    if (type === "increase") {
+      if (getCartItem.length > 0) {
+        const findCurrentProduct = getCartItem.findIndex(
+          (item) => item.productId === getCartitem?.productId
+        );
+        const getcurrentproduct = productsList.findIndex(
+          (item) => item._id === getCartitem?.productId
+        );
+        const getTotalstock = productsList[getcurrentproduct]?.totalStock;
+
+        if (findCurrentProduct > -1) {
+          const getquantity = getCartItem[findCurrentProduct].quantity;
+          if (getquantity + 1 > getTotalstock) {
+            toast.error(`You can't add more than ${getTotalstock} items`);
+            return;
+          }
+        }
+      }
+    } else if (type === "decrease" && getCartitem.quantity <= 1) {
+      toast.error("Minimum quantity is 1");
+      return;
+    }
 
     dispatch(
       UpdateCartitemQuantity({

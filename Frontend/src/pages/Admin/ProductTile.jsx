@@ -10,8 +10,6 @@ const ProductTile = ({
   CurrentEditedID,
   HandleDelate,
 }) => {
- 
-
   return (
     <Card className={" shadow-sm  p-0  cart"}>
       <div>
@@ -19,7 +17,9 @@ const ProductTile = ({
           <img
             src={product?.image}
             alt={product?.title}
-            className={" w-7xl h-70 object-cover object-center  rounded-b-lg  rounded-t-lg"}
+            className={
+              " w-7xl h-70 object-cover object-center  rounded-b-lg  rounded-t-lg"
+            }
           />
         </div>
 
@@ -44,14 +44,18 @@ const ProductTile = ({
             </span>
           </div>
         </CardContent>
-        <CardFooter className={"flex w-full  mt-3 mb-3 justify-center flex-col  "}>
+        <CardFooter
+          className={"flex w-full  mt-3 mb-3 justify-center flex-col  "}
+        >
           <Button
             onClick={() => {
               setCurrentEditedID(product?._id);
               setOpenCreateProduct(true);
               setFromdata(product);
             }}
-            className={"mb-2 w-full bg-white text-black border hover:bg-primary hover:text-white"}
+            className={
+              "mb-2 w-full bg-white text-black border hover:bg-primary hover:text-white"
+            }
           >
             {" "}
             Edit{" "}

@@ -9,42 +9,37 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
 
-
-
 const ProductDetails = ({ open, setOpen, productDetails }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.shopCart);
 
- 
-  const {user} =  useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
-  const handleAddtoCart = (getcurrentID , getcurrentStock) => {
+  const handleAddtoCart = (getcurrentID, getcurrentStock) => {
     console.log(getcurrentID);
-       let getCartItem = cartItems.items || [];
-        const findCurrentProduct = getCartItem.find(
-          (item) => item.productId === getcurrentID
-        );
-        if (findCurrentProduct) {
-          const currentQuantity = findCurrentProduct.quantity;
-          if (currentQuantity + 1 > getcurrentStock) {
-            toast.error(`You can't add more than ${getcurrentStock} items`);
-            return;
-          }
-        }
-    
-
-    
-      dispatch(AddToCart({userId:user?.id,productId:getcurrentID,quantity:1})).then((data)=>{
-        console.log(data);
-        
-        if(data.payload.success){
-          toast.success(data.payload.message);
-          dispatch(fetchCartitems({userId:user.id}));
-        }
-        
-      })
-     
+    let getCartItem = cartItems.items || [];
+    const findCurrentProduct = getCartItem.find(
+      (item) => item.productId === getcurrentID
+    );
+    if (findCurrentProduct) {
+      const currentQuantity = findCurrentProduct.quantity;
+      if (currentQuantity + 1 > getcurrentStock) {
+        toast.error(`You can't add more than ${getcurrentStock} items`);
+        return;
       }
+    }
+
+    dispatch(
+      AddToCart({ userId: user?.id, productId: getcurrentID, quantity: 1 })
+    ).then((data) => {
+      console.log(data);
+
+      if (data.payload.success) {
+        toast.success(data.payload.message);
+        dispatch(fetchCartitems({ userId: user.id }));
+      }
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -100,15 +95,27 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
             </span>
           </div>
           <div>
-            {
-              productDetails?.totalStock <= 0 ? (
-                <Button className={"w-full mb-3 cursor-not-allowed opacity-60"} disabled >
-                  Out of Stock
-                </Button>
-              ) 
-               : <Button onClick={() => handleAddtoCart(productDetails?._id ,productDetails?.totalStock)} className={"w-full mb-3"}>Add to Cart</Button>
-            }
-            
+            {productDetails?.totalStock <= 0 ? (
+              <Button
+                className={"w-full mb-3 cursor-not-allowed opacity-60"}
+                disabled
+              >
+                Out of Stock
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  handleAddtoCart(
+                    productDetails?._id,
+                    productDetails?.totalStock
+                  )
+                }
+                className={"w-full mb-3"}
+              >
+                Add to Cart
+              </Button>
+            )}
+
             <Separator />
             <h2 className="text-xl font-bold mb-3 mt-3 bg-transparent backdrop-blur-md">
               Reviews

@@ -182,6 +182,11 @@ export const userMenuItems = [
     label: "Books",
     path: "/Shop/listing",
   },
+    {
+    id: "Search",
+    label: "Search",
+    path: "/Shop/search",
+  }
 ];
 
 export const FiltersOptions = {

@@ -32,7 +32,7 @@ const MenuItems = () => {
   const handleNavigate = (getcurrentItem) => {
     sessionStorage.removeItem("fliter");
     const currentfilter =
-      getcurrentItem.id !== "Home" && getcurrentItem.id !== "Products"
+      getcurrentItem.id !== "Home" && getcurrentItem.id !== "Products" &&getcurrentItem.id !== "Search"
         ? { category: [getcurrentItem.id] }
         : null;
 
