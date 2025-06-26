@@ -63,6 +63,17 @@ const AddProductReview = async (req, res) => {
 
 const GetProductReview = async (req, res) => {
   try {
+
+    const { productId } = req.params;
+
+    const Reviews = await Review.find({productId : productId});
+
+    res.status(200).json({
+      success:true,
+      message:"Review fetched successfully",
+      data:Reviews
+    })
+
   } catch (error) {
     res.stutus(500).json({
       success: false,

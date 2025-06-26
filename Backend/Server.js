@@ -11,6 +11,7 @@ const addressRouter = require("./routes/Shop/Address-routes");
 const OderRouter = require("./routes/Shop/Oder-routes");
 const AdOrderRouter = require("./routes/Admin/OrderRoutes");
 const SearchRouter = require("./routes/Shop/search-routes");
+const ReviewRouter = require("./routes/Shop/Review-routes");
 
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -41,6 +42,7 @@ App.use("/api/cart", cartRouter);
 App.use("/api/address", addressRouter);
 App.use("/api/Oder",OderRouter);
 App.use("/api/shop/search",SearchRouter)
+App.use("/api/shop/review",ReviewRouter)
 
 App.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

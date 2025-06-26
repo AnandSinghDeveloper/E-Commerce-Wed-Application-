@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -8,13 +9,23 @@ import { Input } from "../ui/input";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
+import { Label } from "@radix-ui/react-label";
+import StarRating from "../Common/StarRating";
 
 const ProductDetails = ({ open, setOpen, productDetails }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.shopCart);
-
+  const [reviewMessage, setReviewMessage] = useState("");
+  const [rating, setRating] = useState(0);
   const { user } = useSelector((state) => state.auth);
 
+  const handleRatingchange = (getrating) => {
+    setRating(getrating);
+  };
+
+  const handleReviewSubmit = () => {
+    
+  }
   const handleAddtoCart = (getcurrentID, getcurrentStock) => {
     console.log(getcurrentID);
     let getCartItem = cartItems.items || [];
@@ -48,13 +59,13 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
           "grid grid-cols-2 mx-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]  gap-8 sm:p-12 "
         }
       >
-        <div className="relative overflow-hidden rounded-lg ">
+        <div className="relative overflow-hidden  ">
           <img
             src={productDetails?.image}
             alt={productDetails?.title}
             width={600}
             height={600}
-            className=" object-cover aspect-square w-full "
+            className=" object-cover aspect-square rounded-2xl w-full "
           />
         </div>
 
@@ -144,9 +155,23 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                 </div>
               </div>
             </div>
-            <div className="flex mt-6  gap-2">
-              <Input placeholder="Enter your review" />
-              <Button className={""}>Submit</Button>
+            <div className="flex flex-col mt-10  gap-2">
+              <Label>Leave a review</Label>
+              <div className="flex">
+                <StarRating
+                  rating={rating}
+                  handleRatingchange={handleRatingchange}
+                />
+              </div>
+              <Input
+                name={"review"}
+                value={reviewMessage}
+                onOpenChange={(e) => setReviewMessage(e.target.value)}
+                placeholder="Enter your review"
+              />
+              <Button onClick={handleReviewSubmit} disabled={reviewMessage.trim() === ""} className={""}>
+                Submit
+              </Button>
             </div>
           </div>
         </div>
