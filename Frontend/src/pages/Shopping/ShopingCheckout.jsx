@@ -36,12 +36,12 @@ const ShopingCheckout = () => {
   const inisatePaypalPayment = () => {
 
     if(cartItems?.items?.length === 0){
-  toast.error(" Your Cart is empty");
+  toast.warning(" Your Cart is empty please add some items to checkout");
   return;
 }
 
 if(!currentAddress){
-  toast.error("Please select one address to checkout");
+  toast.warning("Please select one address to checkout");
   return;
 }
 

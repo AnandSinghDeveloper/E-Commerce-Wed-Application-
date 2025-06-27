@@ -9,16 +9,16 @@ const initialState = {
 export const addReview = createAsyncThunk(
   "ReviewSlice/addReview",
   async (data) => {
-    const response = await axios.get(
+    const response = await axios.post(
       `http://localhost:5000/api/shop/review/add`,
-      {data}
+      data
     );
     return response?.data;
   }
 );
 
 export const getReviews = createAsyncThunk(
-  "ReviewSlice/getReview",
+  "ReviewSlice/getReviews",
   async (id) => {
     const response = await axios.get(
       `http://localhost:5000/api/shop/review/${id}`
@@ -41,6 +41,8 @@ const ReviewSlice = createSlice({
     })
     .addCase(getReviews.fulfilled, (state, action) => {
       state.isloading = false;
+      console.log(action.payload);
+      
       state.reviewList = action.payload.data;
     })
     .addCase(getReviews.rejected, (state, action) => {

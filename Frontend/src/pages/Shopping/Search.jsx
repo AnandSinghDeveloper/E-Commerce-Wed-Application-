@@ -48,7 +48,7 @@ const Search = () => {
     if (findCurrentProduct) {
       const currentQuantity = findCurrentProduct.quantity;
       if (currentQuantity + 1 > getcurrentStock) {
-        toast.error(`You can't add more than ${getcurrentStock} items`);
+        toast.info(`You can't add more than ${getcurrentStock} items`);
         return;
       }
     }

@@ -4,7 +4,7 @@ import { StarIcon } from "lucide-react";
 
 const StarRating = ({ rating, handleRatingchange }) => {
   return [1, 2, 3, 4, 5].map((star, index) => (
-    <Button
+    <Button 
       className={`mr-1 rounded-full ${
         star <= rating
           ? "hover:bg-yellow-400 text-yellow-400"

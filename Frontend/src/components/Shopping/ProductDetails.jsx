@@ -11,21 +11,53 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddToCart, fetchCartitems } from "@/store/Shop/shopCartSlice";
 import { Label } from "@radix-ui/react-label";
 import StarRating from "../Common/StarRating";
+import { addReview, getReviews } from "@/store/Shop/reviewSlice";
+import { useEffect } from "react";
 
 const ProductDetails = ({ open, setOpen, productDetails }) => {
+
+  
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const { cartItems } = useSelector((state) => state.shopCart);  
+  const { reviewList } = useSelector((state) => state.reviews); 
   const [reviewMessage, setReviewMessage] = useState("");
   const [rating, setRating] = useState(0);
   const { user } = useSelector((state) => state.auth);
+
 
   const handleRatingchange = (getrating) => {
     setRating(getrating);
   };
 
   const handleReviewSubmit = () => {
-    
-  }
+    dispatch(
+      addReview({
+        productId: productDetails._id,
+        userId: user?.id,
+        UserName: user?.userName,
+        reviewMessage: reviewMessage,
+        reviewRating: rating,
+      })
+    ).then((data) => {
+        if (data.payload.success) {
+          setReviewMessage("");
+          setRating(0);
+          toast.success(data.payload.message);
+          dispatch(getReviews(productDetails._id));
+        }else if(data.payload.error){
+          toast.error(data.payload.message);
+        }
+        
+      })
+  };
+
+  useEffect(() => {
+    if (productDetails !== null) {
+       dispatch(getReviews(productDetails._id));
+    }
+  }, [productDetails]);
+
+ 
   const handleAddtoCart = (getcurrentID, getcurrentStock) => {
     console.log(getcurrentID);
     let getCartItem = cartItems.items || [];
@@ -35,7 +67,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
     if (findCurrentProduct) {
       const currentQuantity = findCurrentProduct.quantity;
       if (currentQuantity + 1 > getcurrentStock) {
-        toast.error(`You can't add more than ${getcurrentStock} items`);
+        toast.info(`You can't add more than ${getcurrentStock} items`);
         return;
       }
     }
@@ -52,8 +84,21 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
     });
   };
 
+  const handledialogClose = () => {
+    setOpen();
+    dispatch(fetchCartitems({ userId: user.id }));
+    setReviewMessage("");
+    setRating(0);
+  };
+
+    const averageRating = 
+     reviewList&& reviewList.length > 0 ?
+      reviewList.reduce((sum, reviewItem) => sum + reviewItem.reviewRating, 0) /
+      reviewList.length : 0;
+
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handledialogClose}>
       <DialogContent
         className={
           "grid grid-cols-2 mx-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]  gap-8 sm:p-12 "
@@ -96,13 +141,9 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
             ) : null}
           </div>
           <div className="flex items-center gap-1 mb-4">
-            <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-            <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-            <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-            <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-            <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
+         <StarRating rating={averageRating} />
             <span className="text-sm text-muted-foreground">
-              (4.5 out of 5 stars)
+              ({averageRating.toFixed(1)} out of 5 stars)
             </span>
           </div>
           <div>
@@ -131,48 +172,62 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
             <h2 className="text-xl font-bold mb-3 mt-3 bg-transparent backdrop-blur-md">
               Reviews
             </h2>
-            <div className="h-30 mt-5 overflow-y-auto">
-              <div className="grid gap-6 ">
-                <div className=" flex gap-4">
+            <div className="h-35 mt-5 overflow-y-auto">
+              <div className="grid gap-2 ">
+                {
+                  reviewList && reviewList.length > 0 ? reviewList.map((item) => (
+                    <div className=" flex gap-4">
                   <Avatar className={"w-10 h-10 border"}>
-                    <AvatarFallback className=" font-bold  ">GT</AvatarFallback>
+                    <AvatarFallback className=" font-bold  ">{item.UserName[0].toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="grid gap-2 ">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-md font-semibold"> Gautam Thakur</h3>
+                      <h3 className="text-md font-semibold">{item.UserName}</h3>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-                      <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-                      <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-                      <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
-                      <StarIcon className="w-4 fill-amber-400 h-4 text-yellow-400" />
+                    <div className="flex items-center ">
+                      <StarRating rating={item.reviewRating} />
                     </div>
                     <p className=" text-sm text-muted-foreground ">
-                      This is a good product , i like it
+                      {item.reviewMessage}
                     </p>
                   </div>
                 </div>
+                  ))
+                    
+                   : ( <p className="text-sm text-muted-foreground">
+                      No Reviews Found
+                    </p>)
+                   
+                  
+                }
+                
               </div>
             </div>
-            <div className="flex flex-col mt-10  gap-2">
-              <Label>Leave a review</Label>
+            {/* <form> */}
+            <div className="flex flex-col mt-10   gap-.5">
+              <Label className="text-md font-semibold mb-1">Leave a review </Label>
               <div className="flex">
                 <StarRating
                   rating={rating}
                   handleRatingchange={handleRatingchange}
                 />
               </div>
-              <Input
+              <Input 
+              className={"mt-1 mb-2"}
                 name={"review"}
                 value={reviewMessage}
-                onOpenChange={(e) => setReviewMessage(e.target.value)}
+                onChange={(e) => setReviewMessage(e.target.value)}
                 placeholder="Enter your review"
               />
-              <Button onClick={handleReviewSubmit} disabled={reviewMessage.trim() === ""} className={""}>
+              <Button
+                onClick={handleReviewSubmit}
+                disabled={reviewMessage.trim() === ""}
+                className={""}
+              >
                 Submit
               </Button>
             </div>
+            {/* </form> */}
           </div>
         </div>
       </DialogContent>
