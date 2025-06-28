@@ -8,17 +8,22 @@ const AddressCard = ({
   handleDelete,
   handleEdit,
   setCurrentAddress,
+  selectedId,
 }) => {
+
+ 
+  
   return (
     <Card
       onClick={() => {
         setCurrentAddress ? setCurrentAddress(addressInfo) : null;
       }}
-      className="relative overflow-hidden  w-full"
+      className={`relative overflow-hidden w-full cursor-pointer ${
+        selectedId === addressInfo._id ? "border-[4px] border-[#340e76] " : "border-black"}`}
     >
       {/* <ShineBorder shineColor={["#991F87", "#", "#FFAA43"]} /> */}
 
-      <CardContent className={"grid gap-4 "}>
+      <CardContent className={` grid gap-4 `}>
         <div className=" flex gap-5 ">
           {" "}
           <Label className={"text-md font-semibold"}>Address : </Label>{" "}

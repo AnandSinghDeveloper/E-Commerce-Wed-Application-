@@ -23,7 +23,7 @@ const initialAddressFormData = {
   notes: "",
 };
 
-const Address = ({ setCurrentAddress }) => {
+const Address = ({ setCurrentAddress , selectedId}) => {
   const [fromdata, setFromdata] = useState(initialAddressFormData);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -41,7 +41,7 @@ const Address = ({ setCurrentAddress }) => {
 
     if (addressList.length >= 3 && currentEditedID === null) {
       setFromdata(initialAddressFormData);
-      toast.error("You can add only 3 address");
+      toast.warning("You can add only 3 address");
       return;
     }
 
@@ -112,6 +112,7 @@ const Address = ({ setCurrentAddress }) => {
         {addressList && addressList.length > 0
           ? addressList.map((address, index) => (
               <AddressCard
+                selectedId={selectedId}
                 key={index}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}

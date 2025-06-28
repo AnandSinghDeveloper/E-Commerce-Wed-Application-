@@ -41,7 +41,7 @@ const CartContent = ({ cartitem }) => {
         if (findCurrentProduct > -1) {
           const getquantity = getCartItem[findCurrentProduct].quantity;
           if (getquantity + 1 > getTotalstock) {
-            toast.error(`You can't add more than ${getTotalstock} items`);
+            toast.info(`You can't add more than ${getTotalstock} items`);
             return;
           }
         }

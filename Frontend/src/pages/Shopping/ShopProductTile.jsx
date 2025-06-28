@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
-import { FaIndianRupeeSign } from "react-icons/fa6";
+
 
 const ShopProductTile = ({
   product,
