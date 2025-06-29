@@ -6,7 +6,15 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
 
-const ImageUpload = ({ image, setImage, imageUrl, setImageUrl , setLoading, loading}) => {
+const ImageUpload = ({
+  image,
+  setImage,
+  imageUrl,
+  setImageUrl,
+  setLoading,
+  loading,
+  isCustomStyle = false,
+}) => {
   const inputRef = useRef(null);
   const handleImageFile = (e) => {
     const file = e.target.files[0];
@@ -56,7 +64,7 @@ const ImageUpload = ({ image, setImage, imageUrl, setImageUrl , setLoading, load
   }, [image]);
 
   return (
-    <div className="w-full max-w-md mx-auto mt-4 ">
+    <div className={`w-full  mt-4 ${isCustomStyle ? "" : "max-w-md mx-auto"} `}>
       <Label className={"text-xl ml-5 mb-3 font-semibold "}>Upload Image</Label>
       <div className="flex flex-col items-center justify-center h-32 m-5 cursor-pointer border-dashed border-2 p-5 rounded-xl ">
         <Input
@@ -81,10 +89,9 @@ const ImageUpload = ({ image, setImage, imageUrl, setImageUrl , setLoading, load
               Drag & Drop Upload Image
             </span>
           </Label>
+        ) : loading ? (
+          <Skeleton className={"h-20 w-full bg-gray-200 "} />
         ) : (
-              
-              loading ? <Skeleton className={"h-20 w-full bg-gray-200 "}/>:
-            
           <div className="flex items-center justify-between w-full  cursor-pointer">
             <div className="flex items-center">
               <FileIcon className="w-7 h-7 text-primary text-lg mr-2" />

@@ -12,6 +12,7 @@ const OderRouter = require("./routes/Shop/Oder-routes");
 const AdOrderRouter = require("./routes/Admin/OrderRoutes");
 const SearchRouter = require("./routes/Shop/search-routes");
 const ReviewRouter = require("./routes/Shop/Review-routes");
+const CommonFeatureRouter = require("./routes/Admin/common/FeatureRoutes");
 
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -36,6 +37,7 @@ App.use(cookieParser());
 App.use(express.static("public"));
 App.use("/api/auth", authRouter);
 App.use("/api/admin", adminRouter);
+App.use("/api/common/Feature", CommonFeatureRouter);
 App.use("/api/AdOder", AdOrderRouter);
 App.use("/api/shop", shopRouter);
 App.use("/api/cart", cartRouter);

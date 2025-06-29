@@ -121,7 +121,7 @@ if(!currentAddress){
             className={"mt-5 bg-blue-900  hover:bg-blue-900"}
           >
            {
-            ispaymentstarted ? <Loader /> : "Checkout"
+            ispaymentstarted ? " Progressing Payment" : "Checkout"
            }
           </Button>
         </div>

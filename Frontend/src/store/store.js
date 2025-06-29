@@ -8,6 +8,7 @@ import oderSlice from "./Shop/OderSlice";
 import AdorderSlice from "./Admin/ADorderSlice";
 import searchSlice from "./Shop/searchSlice";
 import ReviewSlice from "./Shop/reviewSlice";
+import FeatureSlice from "./common/CommonSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     order: oderSlice,
     search: searchSlice,
     reviews: ReviewSlice,
+    feature: FeatureSlice
   },
 });
 

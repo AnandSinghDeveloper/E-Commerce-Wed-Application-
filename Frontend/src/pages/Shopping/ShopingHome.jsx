@@ -236,7 +236,7 @@ const ShopingHome = () => {
           <ChevronRightIcon className="w-6 h-6" />
         </Button>
       </div>
-      <selection className="py-12 bg-gray-50  text-zinc-800 font-[ubuntu]">
+      <selection className="py-12 bg-white  text-zinc-800 font-[ubuntu]">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">
             Shop by Cetorery
@@ -265,7 +265,7 @@ const ShopingHome = () => {
           </div>
         </div>
       </selection>
-      <selection className="py-12 bg-gray-50  text-zinc-800 font-[ubuntu]">
+      <selection className="py-12 bg-white  text-zinc-800 font-[ubuntu]">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
